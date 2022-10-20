@@ -1,6 +1,29 @@
 #include <iostream>
+#include <memory>
 
-int main() {
+// project includes
+#include "base_app.hpp"
+
+class App : public BaseApp<App>
+{
+public:
+    void StartUp()
+    {
+        std::cout << "derived startup" << std::endl;
+    }
+    
+    void Update()
+    {
+        std::cout << "derived update" << std::endl;
+    }
+};
+
+
+int main(int, char**) 
+{
     std::cout << "Hello World!" << "\n";
+    App* app;
+    app->Run();
+    std::cout << "app shut down" <<std::endl;
     return 0;
 }
