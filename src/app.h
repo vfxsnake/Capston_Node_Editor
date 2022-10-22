@@ -1,10 +1,12 @@
 #pragma once
 
-#include "sdl_app_base.hpp"
+#include "glfw_app_base.hpp"
 
-class App : public SdlAppBase<App>
+class App : public GLFWAppBase<App>
 {
 public:
-    void StartUp();
     void Update();
+private:
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
 };

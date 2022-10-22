@@ -28,8 +28,8 @@ add_library(imgui STATIC
         ${LIB_FOLDER}/imgui/backends/imgui_impl_opengl3.cpp
         ${LIB_FOLDER}/imgui/backends/imgui_impl_opengl3.h
         ${LIB_FOLDER}/imgui/backends/imgui_impl_opengl3_loader.h
-        ${LIB_FOLDER}/imgui/backends/imgui_impl_sdl.cpp
-        ${LIB_FOLDER}/imgui/backends/imgui_impl_sdl.h
+        ${LIB_FOLDER}/imgui/backends/imgui_impl_glfw.cpp
+        ${LIB_FOLDER}/imgui/backends/imgui_impl_glfw.h
         ${LIB_FOLDER}/imgui/imgui_internal.h
         ${LIB_FOLDER}/imgui/imgui_tables.cpp
         ${LIB_FOLDER}/imgui/imgui_widgets.cpp
@@ -41,15 +41,15 @@ add_library(imgui STATIC
 
 
 set(OpenGL_GL_PREFERENCE "GLVND")
-find_package(SDL2 REQUIRED)
-find_package(OpenGL REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS} ${INCLUDE_FOLDER} ${imgui_Includes} ${node_editor_Includes} ${OPENGL_INCLUDE_DIR})
-
+# find_package(SDL2 REQUIRED)
+# find_package(OpenGL REQUIRED)
+include_directories(${imgui_Includes})
 
 add_executable(capstone_node_editor
-               src/sdl_app_base.hpp
+               src/glfw_app_base.hpp
                src/app.cpp
                src/capstone_node_editor.cpp
               )
-string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-target_link_libraries(capstone_node_editor GL SDL2 imgui dl)
+# string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
+# target_link_libraries(capstone_node_editor GL SDL2 imgui dl)
+target_link_libraries(capstone_node_editor GL glfw imgui dl)
