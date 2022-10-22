@@ -45,6 +45,11 @@ find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${INCLUDE_FOLDER} ${imgui_Includes} ${node_editor_Includes} ${OPENGL_INCLUDE_DIR})
 
-add_executable(capstone_node_editor src/Capstone_node_editor.cpp src/base_app.hpp)
+
+add_executable(capstone_node_editor
+               src/sdl_app_base.hpp
+               src/app.cpp
+               src/capstone_node_editor.cpp
+              )
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 target_link_libraries(capstone_node_editor GL SDL2 imgui dl)
