@@ -1,6 +1,6 @@
-# CPPND: Capstone Hello World Repo
+# CPPND: Capstone Node Editor
 
-This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
+This is the repo for the my Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
 
 The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
 
@@ -17,10 +17,13 @@ In this project, you can build your own C++ application starting with this repo,
   * Linux: gcc / g++ is installed by default on most Linux distros
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
-
+* GLFW:
+  * linux: sudo apt-get install libglfw3-dev
+  * Mac and windows you can see the instructions hire: [GLFW](https://www.glfw.org/)
 ## Basic Build Instructions
 
-1. Clone this repo.
+1. Clone this repo:
+  * git clone --recursive https://github.com/vfxsnake/Capston_Node_Editor.git
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./HelloWorld`.
+4. Run it: `./capstone_node_editor`.
