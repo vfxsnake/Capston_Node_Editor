@@ -21,7 +21,7 @@ public:
 
 int main(int, char**) 
 {
-    std::cout << "Hello World!" << "\n";
+    std::cout << "main function start!" << "\n";
     App* app;
     app->Run();
     std::cout << "app shut down" <<std::endl;
