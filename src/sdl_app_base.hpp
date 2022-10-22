@@ -46,11 +46,12 @@ public:
         }
 
         // Create renderer
-        // sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
-        // if (nullptr == sdl_renderer) {
-        //     std::cerr << "Renderer could not be created.\n";
-        //     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
-        // }
+        sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
+        if (nullptr == sdl_renderer)
+        {
+            std::cerr << "Renderer could not be created.\n";
+            std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+        }
     }
 
 
@@ -80,29 +81,32 @@ public:
                     break;
                 }
             }
-            
+
             Update();
+            Render();
         }
     }
 
 
     void StartUp()
     {
-        std::cout << "std_app_base startUp"<< std::endl;
+        // std::cout << "std_app_base startUp"<< std::endl;
         static_cast<Derived*>(this)->StartUp();
     }
 
 
     void Update()
     {
-        std::cout << "std_app_base Update"<< std::endl;
+        // std::cout << "std_app_base Update"<< std::endl;
         static_cast<Derived*>(this)->Update();
     }
 
 
     void Render()
     {
-        std::cout << "std_app_base Render"<< std::endl;
+        // std::cout << "std_app_base Render"<< std::endl;
+        SDL_RenderClear(sdl_renderer);
+        SDL_RenderPresent(sdl_renderer);
     }
 
 private:
