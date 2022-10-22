@@ -48,7 +48,9 @@ include_directories(${imgui_Includes})
 add_executable(capstone_node_editor
                src/glfw_app_base.hpp
                src/app.cpp
+               src/node_canvas.cpp
                src/capstone_node_editor.cpp
+               
               )
 # string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 # target_link_libraries(capstone_node_editor GL SDL2 imgui dl)
