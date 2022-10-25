@@ -2,36 +2,45 @@
 #include <iostream>
 
 
+// forward declaration
+
+
 /*
     This class defines the window with a canvas to create, arrange and
     connect the nodes. 
     It contains a file menu to save and load previous node graphs
 */
-class NodeCanvas
+class NodeEditor
 {
 public:
     // this class must apply the rule of five as it will be a unique pointer in the app.
-    NodeCanvas(int canvas_id, const char* canvas_name);
-    ~NodeCanvas();
+    NodeEditor(int canvas_id, const char* canvas_name);
+    // destructor
+    ~NodeEditor();
 
     // copy constructor
-    NodeCanvas(NodeCanvas &source);
+    NodeEditor(NodeEditor &source);
     // copy operator
-    NodeCanvas& operator=(NodeCanvas &source);
+    NodeEditor& operator=(NodeEditor &source);
 
     // move constructor
-    NodeCanvas(NodeCanvas &&source);
+    NodeEditor(NodeEditor &&source);
 
     // move operator
-    NodeCanvas& operator=(NodeCanvas &&source); 
+    NodeEditor& operator=(NodeEditor &&source); 
 
-    void Show();
+    void Draw();
 
     // getters
     int GetID();
     const char* GetName();
 
 private:
+
+    void DrawCanvas();
+    void DrawGrid();
+    void DrawOutLiner();
+
     int _id;
     const char* _name;
 };

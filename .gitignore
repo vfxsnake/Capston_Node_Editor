@@ -34,3 +34,6 @@
 # build folder
 build
 .vscode
+
+# ref files
+node_graph.h

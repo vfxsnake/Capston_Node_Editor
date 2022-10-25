@@ -48,7 +48,7 @@ include_directories(${imgui_Includes})
 add_executable(capstone_node_editor
                src/glfw_app_base.hpp
                src/app.cpp
-               src/node_canvas.cpp
+               src/node_editor.cpp
                src/capstone_node_editor.cpp
                
               )

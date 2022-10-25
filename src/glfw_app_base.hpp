@@ -116,7 +116,7 @@ public:
 
     void Update()
     {
-        std::cout << "std_app_base Update"<< std::endl;
+        // std::cout << "std_app_base Update"<< std::endl;
         static_cast<Derived*>(this)->Update();
         
     }
@@ -124,7 +124,7 @@ public:
 
     void Render()
     {
-        std::cout << "std_app_base Render"<< std::endl;
+        // std::cout << "std_app_base Render"<< std::endl;
         
         // Rendering
         ImGui::Render();
@@ -142,8 +142,7 @@ public:
 
     void Run()
     {
-        std::cout << "std_app_base Run"<< std::endl;
-
+        // std::cout << "std_app_base Run"<< std::endl;
 
         StartUp();
 
