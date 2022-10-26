@@ -1,9 +1,11 @@
 #pragma once
 #include <iostream>
+#include <math.h> // fmodf
+#include "imgui.h"
 
-
-// forward declaration
-
+// forward declaration not working for structs imgui.h needed
+// struct ImVec2;
+// struct ImDrawList;
 
 /*
     This class defines the window with a canvas to create, arrange and
@@ -35,6 +37,9 @@ public:
     int GetID();
     const char* GetName();
 
+    // create node
+    void AddNode(const char* node_name);
+
 private:
 
     void DrawCanvas();
@@ -43,4 +48,10 @@ private:
 
     int _id;
     const char* _name;
+
+    bool _show_grid = true;
+    ImVec2 _scrolling;
+    ImDrawList* _draw_list;
+    
+    int _out_liner_width = 150; 
 };
