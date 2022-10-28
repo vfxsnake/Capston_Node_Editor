@@ -1,6 +1,7 @@
+#include <math.h>
 #include "node_editor.h"
 #include "imgui.h"
-#include <math.h>
+
 
 // change this to basic math functions
 static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
@@ -85,6 +86,9 @@ void NodeEditor::DrawCanvas()
         for (float y = fmodf(_scrolling.y, GRID_SZ); y < canvas_sz.y; y += GRID_SZ)
             _draw_list->AddLine(ImVec2(0.0f, y) + win_pos, ImVec2(canvas_sz.x, y) + win_pos, GRID_COLOR);
     }
+    // draw nodes:
+    node.SetDrawList(_draw_list);
+    node.Draw();
 
     // Scrolling
     if (ImGui::IsWindowHovered() && !ImGui::IsAnyItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle, 0.0f))

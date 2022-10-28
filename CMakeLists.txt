@@ -45,13 +45,19 @@ set(OpenGL_GL_PREFERENCE "GLVND")
 # find_package(OpenGL REQUIRED)
 include_directories(${imgui_Includes})
 
-add_executable(capstone_node_editor
-               src/glfw_app_base.hpp
-               src/app.cpp
-               src/node_editor.cpp
-               src/capstone_node_editor.cpp
-               
+# add_executable(capstone_node_editor
+#                src/glfw_app_base.hpp
+#                src/node_base.hpp
+#                src/app.cpp
+#                src/node_editor.cpp
+#                src/capstone_node_editor.cpp
+#               )
+
+add_executable(test_nodes
+               src/plug.hpp
+               src/test/test_nodes.cpp  
               )
 # string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 # target_link_libraries(capstone_node_editor GL SDL2 imgui dl)
-target_link_libraries(capstone_node_editor GL glfw imgui dl)
+# target_link_libraries(capstone_node_editor GL glfw imgui dl)
+target_link_libraries(test_nodes)

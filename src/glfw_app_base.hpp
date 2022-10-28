@@ -30,9 +30,11 @@ template<typename Derived>
 class GLFWAppBase
 {
 public:
-    GLFWAppBase(int screen_width=1280, int screen_height=720)
+    GLFWAppBase()
     {
-        std::cout << "std_app_base constructor"<< std::endl;
+        const int screen_width=1280;
+        const int screen_height=720;
+        std::cout << "GLFW_app_base constructor"<< std::endl;
         
         // Setup window
         if (!glfwInit())
