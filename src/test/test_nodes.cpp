@@ -16,5 +16,4 @@ int main()
     int temp_int = 60;
     plug_int.SetValue(&temp_int);
     plug_int.PrintValue();
-
 }

@@ -15,6 +15,9 @@ public:
     ~Plug()
     {
         std::cout << "plug destructor" << std::endl;
+        _value = nullptr;
+        _parent_node = nullptr;
+        _source_plug = nullptr;
     }
 
     // getters
