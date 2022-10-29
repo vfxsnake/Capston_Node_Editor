@@ -2,7 +2,7 @@
 #include <iostream>
 #include <math.h> // fmodf
 #include "imgui.h"
-#include "node_base.hpp"
+// #include "node_base.hpp"
 
 // forward declaration not working for structs imgui.h needed
 // struct ImVec2;
@@ -54,7 +54,7 @@ private:
     bool _show_grid = true;
     ImVec2 _scrolling;
     ImDrawList* _draw_list;
-    SimpleNode node;
+    // SimpleNode node;
     
     int _out_liner_width = 150; 
 };
