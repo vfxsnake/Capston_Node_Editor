@@ -46,6 +46,7 @@ public:
     Plug()
     {
         std::cout << "plug constructor" << std::endl;
+        _value = new T;
     }
     ~Plug()
     {
@@ -53,6 +54,7 @@ public:
         _value = nullptr;
         _source_plug = nullptr;
         SetParent(nullptr);
+        delete _value;
     }
 
     // getters
