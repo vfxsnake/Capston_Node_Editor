@@ -1,15 +1,26 @@
 #pragma once
 
+#include <iostream>
+#include <vector>
+// forward declarations:
+class AbstractPlug;
 
 class AbstractNode
 { 
 public:
-    virtual bool is_dirty() const = 0;
+    // getter:
+    bool isDirty() const;
+  
+    // setters
+    void SetDirty(bool value);
+
+    // this function is the must relevant 
+    // here it will compute and set the plug
+    // values
+    virtual bool Compute() = 0;
     
-    virtual void set_dirty(bool value)
-    {
-        _dirty = value;
-    }
+    // function relevant for the evaluation manager 
+    virtual std::vector<AbstractPlug*> GetInPlugs()const = 0;
 
 private:
     bool _dirty = true;

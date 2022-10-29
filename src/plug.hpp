@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include "abstract_node.h"
 
