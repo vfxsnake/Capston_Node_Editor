@@ -44,7 +44,7 @@ public:
 
 private:
     // reference to the parent node, to query the status
-    AbstractNode* _parent_node;
+    AbstractNode* _parent_node = nullptr;
     int _id;
 };
 
@@ -79,6 +79,8 @@ public:
     void SetSourcePlug(PlugOut<T>* source_plug)
     {
         _source_plug = source_plug;
+        if(GetParent())
+            GetParent()->SetDirty(true);
     } 
 
 private:
