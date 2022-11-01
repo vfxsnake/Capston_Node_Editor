@@ -33,17 +33,25 @@ int main()
     node_in_plug.PrintValue();
 
     std::cout << "-----------------testing addition--------------------------";
-    // FloatNode n1{};
-    // n1.SetDefaultValue(-10.53);
-    // n1.Compute();
-    // FloatNode n2{};
-    // n2.SetDefaultValue(50.12);
-    // n2.Compute();
+    FloatNode n1{};
+    n1.SetDefaultValue(7.5);
+    n1.Compute();
+    
+    FloatNode n2{};
+    n2.SetDefaultValue(3.7);
+    n2.Compute();
+
 
     FloatAdditionNode add_1{};
     add_1.SetDefaultValue_0(10.5f);
     add_1.SetDefaultValue_1(-50.0f);
     add_1.Compute();
     add_1.GetOutPlug()->PrintValue();
+
+    add_1.GetPlugIn_0()->SetSourcePlug(n1.GetOutPlug());
+    add_1.GetPlugIn_1()->SetSourcePlug(n2.GetOutPlug());
+    add_1.Compute();
+    add_1.GetOutPlug()->PrintValue();
+
 }
 

@@ -54,6 +54,9 @@ public:
     void SetDefaultValue_1(float Value);
     PlugOut<float>* GetOutPlug()const;
 
+    PlugIn<float>* GetPlugIn_0()const;
+    PlugIn<float>* GetPlugIn_1()const;
+
 private:
 
     PlugOut<float>* _out_0;

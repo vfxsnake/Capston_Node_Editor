@@ -158,3 +158,12 @@ void FloatAdditionNode::SetDefaultValue_1(float value)
     if (!IsDirty())
         SetDirty(true);
 }
+
+PlugIn<float>* FloatAdditionNode::GetPlugIn_0() const
+{
+    return _in_0;
+}
+PlugIn<float>* FloatAdditionNode::GetPlugIn_1()const
+{
+    return _in_1;
+}
