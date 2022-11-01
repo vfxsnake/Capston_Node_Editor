@@ -3,6 +3,14 @@
 #include <iostream>
 #include "abstract_node.h"
 
+// function declaration
+class AbstractPlug;
+template<class>
+class PlugIn;
+template<class>
+class PlugOut;
+
+// classes Definitions
 class AbstractPlug
 {
 public:
@@ -40,52 +48,77 @@ private:
     int _id;
 };
 
+
 template <typename T>
-class Plug : public AbstractPlug
+class PlugIn : public AbstractPlug
 {
 public:
-    Plug()
+    PlugIn()
     {
         std::cout << "plug constructor" << std::endl;
-        _value = new T;
     }
-    ~Plug()
+    ~PlugIn()
     {
         std::cout << "plug destructor" << std::endl;
-        _value = nullptr;
         _source_plug = nullptr;
         SetParent(nullptr);
-        delete _value;
     }
 
     // getters
-    T* GetValue() const
-    {
-        return _value;
-    }
-
-    Plug<T>* GetSourcePlug() const
+    PlugOut<T>* GetSourcePlug() const
     {
         return _source_plug;
     }
 
     virtual void PrintValue() const override
     {
-        std::cout << *_value << std::endl;
+        _source_plug->PrintValue();
     }
 
-    // setter
-    void SetValue(T* value)
-    {
-        _value = value;
-    }
-    
-    void SetSourcePlug(Plug<T>* source_plug)
+    // setter    
+    void SetSourcePlug(PlugOut<T>* source_plug)
     {
         _source_plug = source_plug;
     } 
 
 private:
-    T* _value = nullptr;
-    Plug* _source_plug = nullptr;
+
+    PlugOut<T>* _source_plug = nullptr;
+};
+
+
+template <typename T>
+class PlugOut : public AbstractPlug
+{
+public:
+    PlugOut()
+    {
+        std::cout << "plug constructor" << std::endl;
+    }
+    ~PlugOut()
+    {
+        std::cout << "plug destructor" << std::endl;
+        SetParent(nullptr);
+    }
+
+    // getters
+    T GetReferenceValue() const
+    {
+        return *_reference_to_value;
+    }
+
+
+    virtual void PrintValue() const override
+    {
+        std::cout << GetReferenceValue() << std::endl;
+    }
+
+    // setter
+    void SetReferenceToValue(T* value)
+    {
+        _reference_to_value = value;
+    }
+    
+private:
+    T* _reference_to_value = nullptr;
 };

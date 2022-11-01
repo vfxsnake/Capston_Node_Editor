@@ -55,6 +55,8 @@ include_directories(${imgui_Includes})
 
 add_executable(test_nodes
                src/plug.hpp
+               src/abstract_node.cpp
+               src/nodes.cpp
                src/test/test_nodes.cpp  
               )
 # string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)

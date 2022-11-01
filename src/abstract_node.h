@@ -9,7 +9,7 @@ class AbstractNode
 { 
 public:
     // getter:
-    bool isDirty() const;
+    bool IsDirty() const;
   
     // setters
     void SetDirty(bool value);
@@ -20,7 +20,8 @@ public:
     virtual bool Compute() = 0;
     
     // function relevant for the evaluation manager 
-    virtual std::vector<AbstractPlug*> GetInPlugs()const = 0;
+    virtual std::vector<AbstractPlug*> GetPlugIns()const = 0;
+    virtual std::vector<AbstractPlug*> GetPlugOuts() const = 0;
 
 private:
     bool _dirty = true;

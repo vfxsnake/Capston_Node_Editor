@@ -1,6 +1,6 @@
 #include "abstract_node.h"
 
-bool AbstractNode::isDirty() const
+bool AbstractNode::IsDirty()const
 {
     return _dirty;
 }
