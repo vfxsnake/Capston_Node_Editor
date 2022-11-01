@@ -46,12 +46,27 @@ int main()
     add_1.SetDefaultValue_0(10.5f);
     add_1.SetDefaultValue_1(-50.0f);
     add_1.Compute();
+    std::cout << "add default values in add node" << std::endl;
     add_1.GetOutPlug()->PrintValue();
 
     add_1.GetPlugIn_0()->SetSourcePlug(n1.GetOutPlug());
     add_1.GetPlugIn_1()->SetSourcePlug(n2.GetOutPlug());
     add_1.Compute();
+    std::cout << "add two float nodes" << std::endl; 
     add_1.GetOutPlug()->PrintValue();
 
+    // disconecting plug 0 
+    add_1.GetPlugIn_1()->SetSourcePlug(nullptr);
+    add_1.SetDefaultValue_1(45);
+    add_1.Compute();
+    std::cout << "remove plug 1 source value to use default" << std::endl; 
+    add_1.GetOutPlug()->PrintValue();
+
+    add_1.GetPlugIn_0()->SetSourcePlug(nullptr);
+    add_1.SetDefaultValue_0(400.5);
+    add_1.GetPlugIn_1()->SetSourcePlug(n2.GetOutPlug());
+    add_1.Compute();
+    std::cout << "remove plug 1 source value to use default" << std::endl; 
+    add_1.GetOutPlug()->PrintValue();
 }
 
