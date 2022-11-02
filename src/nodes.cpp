@@ -135,6 +135,7 @@ bool FloatAdditionNode::Compute()
             value_1 = _in_1->GetSourcePlug()->GetReferenceValue();
 
         //  perform addition
+        std::cout << " val 0: " << value_0 << " val 1: " << value_1 << std::endl;
         *_result = value_0 + value_1;
         // remove when the evaluation system is implemented it will change the state of the nodes.
         SetDirty(false);
