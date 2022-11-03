@@ -93,5 +93,27 @@ int main()
     else
         std::cout << "add 2 nodes together fail" << std::endl;
     std::cout << "..................................." << std::endl;
+
+    std::cout << "------------------- evaluation node ---------------------------" << std::endl;
+    FloatNode node1, node2, node3, node4;
+    FloatAdditionNode add1, add2, add3;
+    EvaluationNode evaluate1;
+
+    // set default values to float nodes
+    node1.SetDefaultValue(1.0f);
+    node2.SetDefaultValue(2.0f);
+    node3.SetDefaultValue(3.0f);
+    node4.SetDefaultValue(4.0f);
+
+    add1.GetPlugIn_0()->SetSourcePlug(node1.GetOutPlug());
+    add1.GetPlugIn_1()->SetSourcePlug(node2.GetOutPlug());
+    add2.GetPlugIn_0()->SetSourcePlug(node3.GetOutPlug());
+    add2.GetPlugIn_1()->SetSourcePlug(node4.GetOutPlug());
+    add3.GetPlugIn_0()->SetSourcePlug(add1.GetOutPlug());
+    add3.GetPlugIn_1()->SetSourcePlug(add2.GetOutPlug());
+    
+    evaluate1.GetPlugIn_0()->SetSourcePlug(add3.GetOutPlug());
+    evaluate1.Compute();
+    
 }
 

@@ -49,9 +49,11 @@ bool FloatNode::Compute()
     // TODO Convert to multi thread
     // connecting result to default value address.
     if(IsDirty())
+    {
         *_result = _default_value;
         // remove when the evaluation system is implemented it will change the state of the nodes.
         SetDirty(false);
+    }
     return true;
 }
 
@@ -97,8 +99,13 @@ FloatAdditionNode::~FloatAdditionNode()
 
 
 std::vector<AbstractPlug*> FloatAdditionNode::GetPlugIns() const 
-{
-    return {_in_0, _in_1};
+{   
+    std::vector<AbstractPlug*> source_connections;
+    if(_in_0->GetSourcePlug())
+        source_connections.emplace_back(_in_0->GetSourcePlug());
+    if(_in_1->GetSourcePlug())
+        source_connections.emplace_back(_in_1->GetSourcePlug());
+    return source_connections;
 }
 
 
@@ -167,4 +174,77 @@ PlugIn<float>* FloatAdditionNode::GetPlugIn_0() const
 PlugIn<float>* FloatAdditionNode::GetPlugIn_1()const
 {
     return _in_1;
+}
+
+
+// --------------------------------------- evaluation node --------------------------------------
+
+EvaluationNode::EvaluationNode()
+{
+    std::cout << "EvaluationNode constructor"<< std::endl;
+    _in_0 = new PlugIn<float>{};
+    _in_0->SetParent(this);
+}
+
+
+EvaluationNode::~EvaluationNode()
+{
+    std::cout << "EvaluationNode destructor"<< std::endl;
+    delete _in_0;
+}
+
+
+std::vector<AbstractPlug*> EvaluationNode::GetPlugIns() const 
+{
+    if(_in_0->GetSourcePlug())
+        return {_in_0->GetSourcePlug()};
+    return {};
+}
+
+
+std::vector<AbstractPlug*> EvaluationNode::GetPlugOuts() const
+{
+    return {};
+}
+
+
+bool EvaluationNode::IterateGraph(AbstractNode* node)
+{    
+    for(auto x : node->GetPlugIns())
+    {
+        if(x->GetParent())
+        {
+            IterateGraph(x->GetParent());
+        }
+    }
+    if(node->IsDirty())
+        node->Compute();
+    return true;
+}
+
+
+bool EvaluationNode::Compute()
+{
+    if(_in_0->GetSourcePlug())
+    {
+        IterateGraph(_in_0->GetSourcePlug()->GetParent());
+    // just for debugging 
+        GetPlugIn_0()->PrintValue();
+    }
+    return true;
+} 
+
+
+PlugIn<float>* EvaluationNode::GetPlugIn_0() const
+{
+    return _in_0;
+}
+
+
+bool EvaluationNode::GetResult(float& out_float) const
+{
+    if (GetPlugIn_0()->GetSourcePlug())
+        out_float = GetPlugIn_0()->GetSourcePlug()->GetReferenceValue();
+        return true;
+    return false;
 }

@@ -28,7 +28,7 @@ public:
     void SetDefaultValue(float value);
 
     PlugOut<float>* GetOutPlug()const;
-
+    
 private:
 
     PlugOut<float>* _out_0;
@@ -66,4 +66,25 @@ private:
     float* _result;
     float _default_value_0;
     float _default_value_1;
+};
+
+
+class EvaluationNode : public AbstractNode
+{
+public:
+    EvaluationNode();
+    ~EvaluationNode();
+
+    // override virtual functions
+    virtual std::vector<AbstractPlug*> GetPlugIns() const override;
+    virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
+    virtual bool Compute() override;
+    bool IterateGraph(AbstractNode* node);
+
+    PlugIn<float>* GetPlugIn_0()const;
+    bool GetResult(float& out_float) const;
+
+private:
+    PlugIn<float>* _in_0;
+
 };

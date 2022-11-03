@@ -5,6 +5,10 @@ This is the repo for the my Capstone project in the [Udacity C++ Nanodegree Prog
 The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
 
 In this project, you can build your own C++ application starting with this repo, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
+# Goal
+* Create a prototype of a node base.
+* Resolve the logic associated of traversing the node graph and computing the result.
+* Resolve the Propagation of changes (dirty propagation) in the node graph.
 
 ## Dependencies for Running Locally
 * cmake >= 3.7

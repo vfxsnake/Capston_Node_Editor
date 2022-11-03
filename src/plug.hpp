@@ -18,11 +18,6 @@ public:
     // during the evaluation process the links between Plugs will require querying the status of the parent Node.
     
     // getters
-    int GetId() const
-    {
-        return _id;
-    }
-
     AbstractNode* GetParent() const
     {
         return _parent_node;
@@ -31,11 +26,6 @@ public:
     virtual void PrintValue() const =0;
 
     // setters
-    void SetId(int id)
-    {
-        _id = id;
-    }
-
     void SetParent(AbstractNode* parent_node)
     {
         _parent_node = parent_node;
@@ -45,7 +35,6 @@ public:
 private:
     // reference to the parent node, to query the status
     AbstractNode* _parent_node = nullptr;
-    int _id;
 };
 
 

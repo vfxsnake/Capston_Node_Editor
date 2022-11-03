@@ -9,10 +9,13 @@ class AbstractNode
 { 
 public:
     // getter:
+    const char* GetName();
     bool IsDirty() const;
   
     // setters
+    void SetName(const char* name);
     void SetDirty(bool value);
+
 
     // this function is the must relevant 
     // here it will compute and set the plug
@@ -25,4 +28,5 @@ public:
 
 private:
     bool _dirty = true;
+    const char* _name;
 };

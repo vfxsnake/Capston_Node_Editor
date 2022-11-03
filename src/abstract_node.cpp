@@ -1,5 +1,10 @@
 #include "abstract_node.h"
 
+void AbstractNode::SetName(const char* name)
+{
+    _name  = name;
+}
+
 bool AbstractNode::IsDirty()const
 {
     return _dirty;
