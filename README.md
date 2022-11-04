@@ -6,7 +6,7 @@ The Capstone Project gives you a chance to integrate what you've learned through
 
 In this project, you can build your own C++ application starting with this repo, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
 # Goal
-* Create a prototype of a node base.
+* Create a prototype of a node base application.
 * Resolve the logic associated of traversing the node graph and computing the result.
 * Resolve the Propagation of changes (dirty propagation) in the node graph.
 
