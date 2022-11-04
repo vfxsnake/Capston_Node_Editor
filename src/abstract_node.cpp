@@ -13,5 +13,6 @@ bool AbstractNode::IsDirty()const
 void AbstractNode::SetDirty(bool value)
 {
     _dirty = value;
-    std::cout << "node dirty" << std::endl;
+    if (_dirty)
+        std::cout << "node dirty" << std::endl;
 }

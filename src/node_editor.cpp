@@ -87,8 +87,8 @@ void NodeEditor::DrawCanvas()
             _draw_list->AddLine(ImVec2(0.0f, y) + win_pos, ImVec2(canvas_sz.x, y) + win_pos, GRID_COLOR);
     }
     // draw nodes:
-    node.SetDrawList(_draw_list);
-    node.Draw();
+    // node.SetDrawList(_draw_list);
+    // node.Draw();
 
     // Scrolling
     if (ImGui::IsWindowHovered() && !ImGui::IsAnyItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle, 0.0f))

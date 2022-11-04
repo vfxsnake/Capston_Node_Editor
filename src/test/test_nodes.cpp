@@ -114,6 +114,15 @@ int main()
     
     evaluate1.GetPlugIn_0()->SetSourcePlug(add3.GetOutPlug());
     evaluate1.Compute();
+
+    std::cout << "no changes compute: ====================================" << std::endl;
+    evaluate1.Compute();
+
+    std::cout << "node changed : ------------------------------------" << std::endl;
+    node4.SetDefaultValue(3.5);
+    std::cout << "node1 is dirty?" << node1.IsDirty() << std::endl;
+    evaluate1.Compute();
+    std::cout << "----------------------" << std::endl;
     
 }
 

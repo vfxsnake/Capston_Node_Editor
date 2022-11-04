@@ -138,14 +138,12 @@ public:
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
-
     }
 
 
     void Run()
     {
         // std::cout << "std_app_base Run"<< std::endl;
-
         StartUp();
 
         while (!glfwWindowShouldClose(window))

@@ -5,7 +5,7 @@
 
 FloatNode::FloatNode()
 {
-    std::cout << "FloatNode constructor"<< std::endl; 
+    // std::cout << "FloatNode constructor"<< std::endl; 
     _default_value = FLOAT_DEFAULT_VALUE;
     _result = new float{};
     *_result = FLOAT_DEFAULT_VALUE;
@@ -19,7 +19,7 @@ FloatNode::FloatNode()
 
 FloatNode::~FloatNode()
 {
-    std::cout << "FloatNode destructor"<< std::endl;
+    // std::cout << "FloatNode destructor"<< std::endl;
     delete _out_0;
     delete _result;
 }
@@ -53,8 +53,9 @@ bool FloatNode::Compute()
         *_result = _default_value;
         // remove when the evaluation system is implemented it will change the state of the nodes.
         SetDirty(false);
+        return true;
     }
-    return true;
+    return false;
 }
 
 
@@ -65,10 +66,10 @@ void FloatNode::SetDefaultValue(float value)
 }
 
 
-// ----------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------- Float Addition Node -----------------------------------------------------------------
 FloatAdditionNode::FloatAdditionNode()
 {
-    std::cout << "FloatAdditionNode constructor"<< std::endl; 
+    // std::cout << "FloatAdditionNode constructor"<< std::endl; 
     _default_value_0 = FLOAT_DEFAULT_VALUE;
     _default_value_0 = FLOAT_DEFAULT_VALUE;
     _result = new float{};
@@ -90,7 +91,7 @@ FloatAdditionNode::FloatAdditionNode()
 
 FloatAdditionNode::~FloatAdditionNode()
 {
-    std::cout << "FloatAdditionNode destructor"<< std::endl;
+    // std::cout << "FloatAdditionNode destructor"<< std::endl;
     delete _out_0;
     delete _in_0;
     delete _in_1;
@@ -144,12 +145,10 @@ bool FloatAdditionNode::Compute()
         //  perform addition
         std::cout << " val 0: " << value_0 << " val 1: " << value_1 << std::endl;
         *_result = value_0 + value_1;
-        // remove when the evaluation system is implemented it will change the state of the nodes.
-        SetDirty(false);
-
+        return true;
     }
             
-    return true;
+    return false;
 }
 
 
@@ -178,10 +177,9 @@ PlugIn<float>* FloatAdditionNode::GetPlugIn_1()const
 
 
 // --------------------------------------- evaluation node --------------------------------------
-
 EvaluationNode::EvaluationNode()
 {
-    std::cout << "EvaluationNode constructor"<< std::endl;
+    // std::cout << "EvaluationNode constructor"<< std::endl;
     _in_0 = new PlugIn<float>{};
     _in_0->SetParent(this);
 }
@@ -189,7 +187,7 @@ EvaluationNode::EvaluationNode()
 
 EvaluationNode::~EvaluationNode()
 {
-    std::cout << "EvaluationNode destructor"<< std::endl;
+    // std::cout << "EvaluationNode destructor"<< std::endl;
     delete _in_0;
 }
 
@@ -214,12 +212,18 @@ bool EvaluationNode::IterateGraph(AbstractNode* node)
     {
         if(x->GetParent())
         {
-            IterateGraph(x->GetParent());
+            if(IterateGraph(x->GetParent()))
+                node->SetDirty(true);
         }
     }
-    if(node->IsDirty())
-        node->Compute();
-    return true;
+
+    if (node->Compute())
+    {
+        std::cout << "graph evaluated" << std::endl;
+        node->SetDirty(false);   
+        return true;
+    }
+    return false;
 }
 
 
@@ -230,8 +234,9 @@ bool EvaluationNode::Compute()
         IterateGraph(_in_0->GetSourcePlug()->GetParent());
     // just for debugging 
         GetPlugIn_0()->PrintValue();
+        return true;
     }
-    return true;
+    return false;
 } 
 
 

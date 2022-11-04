@@ -38,17 +38,18 @@ private:
 };
 
 
+
 template <typename T>
 class PlugIn : public AbstractPlug
 {
 public:
     PlugIn()
     {
-        std::cout << "plug constructor" << std::endl;
+        // std::cout << "plug constructor" << std::endl;
     }
     ~PlugIn()
     {
-        std::cout << "plug destructor" << std::endl;
+        // std::cout << "plug destructor" << std::endl;
         _source_plug = nullptr;
         SetParent(nullptr);
     }
@@ -84,11 +85,11 @@ class PlugOut : public AbstractPlug
 public:
     PlugOut()
     {
-        std::cout << "plug constructor" << std::endl;
+        // std::cout << "plug constructor" << std::endl;
     }
     ~PlugOut()
     {
-        std::cout << "plug destructor" << std::endl;
+        // std::cout << "plug destructor" << std::endl;
         SetParent(nullptr);
     }
 
