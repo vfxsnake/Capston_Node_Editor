@@ -2,12 +2,12 @@
 #include <iostream>
 #include <math.h> // fmodf
 #include "imgui.h"
+
 // #include "node_base.hpp"
 
 // forward declaration not working for structs imgui.h needed
 // struct ImVec2;
 // struct ImDrawList;
-class SimpleNode;
 
 /*
     This class defines the window with a canvas to create, arrange and
@@ -54,7 +54,8 @@ private:
     bool _show_grid = true;
     ImVec2 _scrolling;
     ImDrawList* _draw_list;
-    // SimpleNode node;
-    
-    int _out_liner_width = 150; 
+    int _out_liner_width = 150;
+    // std::vector<Node> nodes; // implement the array of nodes
+    // std::vector<Link> links; // implement the array of links should be a class to call draw function of each node and link
+
 };

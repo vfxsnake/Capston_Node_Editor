@@ -11,14 +11,12 @@ project(capstone_node_editor)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-#add_subdirectory(src/external)
 ## Lib folder
 set(LIB_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/src/external)
 ## Imgui lib
-set(imgui_Includes "${LIB_FOLDER}/imgui"
-        /opt/local/lib
-        /usr/local/lib
-        ${LIB_FOLDER}/imgui/backends)
+set(imgui_Includes ${LIB_FOLDER}/imgui
+                   ${LIB_FOLDER}/imgui/backends)
+
 add_library(imgui STATIC
         ${LIB_FOLDER}/imgui/imconfig.h
         ${LIB_FOLDER}/imgui/imgui.cpp
@@ -38,20 +36,28 @@ add_library(imgui STATIC
         ${LIB_FOLDER}/imgui/imstb_truetype.h
         )
 
+set(imnodes_Includes ${LIB_FOLDER}/im_nodes)
+add_library(imnodes STATIC 
+        ${LIB_FOLDER}/im_nodes/imnodes_internal.h
+        ${LIB_FOLDER}/im_nodes/imnodes.cpp
+        ${LIB_FOLDER}/im_nodes/imnodes.h
+        )
+
 
 
 set(OpenGL_GL_PREFERENCE "GLVND")
-# find_package(SDL2 REQUIRED)
-# find_package(OpenGL REQUIRED)
-include_directories(${imgui_Includes})
 
-# add_executable(capstone_node_editor
-#                src/glfw_app_base.hpp
-#                src/node_base.hpp
-#                src/app.cpp
-#                src/node_editor.cpp
-#                src/capstone_node_editor.cpp
-#               )
+find_package(OpenGL REQUIRED)
+include_directories(${imgui_Includes})
+include_directories(${imnodes_Includes})
+
+
+add_executable(capstone_node_editor
+               src/node_editor.cpp
+               src/glfw_app_base.hpp
+               src/app.cpp
+               src/capstone_node_editor.cpp
+              )
 
 add_executable(test_nodes
                src/plug.hpp
@@ -59,7 +65,6 @@ add_executable(test_nodes
                src/nodes.cpp
                src/test/test_nodes.cpp  
               )
-# string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-# target_link_libraries(capstone_node_editor GL SDL2 imgui dl)
-# target_link_libraries(capstone_node_editor GL glfw imgui dl)
+
+target_link_libraries(capstone_node_editor GL glfw imgui imnodes dl)
 target_link_libraries(test_nodes)

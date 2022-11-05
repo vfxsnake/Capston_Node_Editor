@@ -1,6 +1,7 @@
 #include <math.h>
 #include "node_editor.h"
 #include "imgui.h"
+#include "imnodes.h"
 
 
 // change this to basic math functions
@@ -10,11 +11,13 @@ static inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs) { return Im
 NodeEditor::NodeEditor(int canvas_id, const char* canvas_name) : _id(canvas_id), _name(canvas_name)
 {
     _scrolling = ImVec2(0.0f, 0.0f);
+    ImNodes::CreateContext();
 }
 
 
 NodeEditor::~NodeEditor()
 {
+    ImNodes::DestroyContext();
 }
 
 void NodeEditor::Draw()
@@ -26,9 +29,7 @@ void NodeEditor::Draw()
     ImGuiIO& io = ImGui::GetIO();
     DrawOutLiner();
     ImGui::SameLine();
-    
     DrawCanvas();
-
 
     ImGui::End();
 }
@@ -58,45 +59,13 @@ void NodeEditor::DrawOutLiner()
 
 void NodeEditor::DrawCanvas()
 {
-    ImGuiIO& io = ImGui::GetIO();
-    ImGui::BeginGroup();
-    ImGui::Text("Hold middle mouse button to scroll (%.2f,%.2f)", _scrolling.x, _scrolling.y);
-    
-    ImGui::SameLine(ImGui::GetWindowWidth() - 100);
-    ImGui::Checkbox("Show grid", &_show_grid);
-    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1, 1));
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-    ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(60, 60, 70, 200));
-    ImGui::BeginChild("scrolling_region", ImVec2(0, 0), true, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove);
-    ImGui::PopStyleVar(); // WindowPadding
-    ImGui::PushItemWidth(120.0f);
+    ImNodes::BeginNodeEditor();
 
-    const ImVec2 offset = ImGui::GetCursorScreenPos() + _scrolling;
-    _draw_list = ImGui::GetWindowDrawList();
     
-    // Display grid
-    if (_show_grid)
+    ImNodes::EndNodeEditor();
+    int start_attr, end_attr;
+    if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
     {
-        ImU32 GRID_COLOR = IM_COL32(200, 200, 200, 40);
-        float GRID_SZ = 64.0f;
-        ImVec2 win_pos = ImGui::GetCursorScreenPos();
-        ImVec2 canvas_sz = ImGui::GetWindowSize();
-        for (float x = fmodf(_scrolling.x, GRID_SZ); x < canvas_sz.x; x += GRID_SZ)
-            _draw_list->AddLine(ImVec2(x, 0.0f) + win_pos, ImVec2(x, canvas_sz.y) + win_pos, GRID_COLOR);
-        for (float y = fmodf(_scrolling.y, GRID_SZ); y < canvas_sz.y; y += GRID_SZ)
-            _draw_list->AddLine(ImVec2(0.0f, y) + win_pos, ImVec2(canvas_sz.x, y) + win_pos, GRID_COLOR);
+        std::cout << "link created from : " << start_attr << " " << end_attr << std::endl;
     }
-    // draw nodes:
-    // node.SetDrawList(_draw_list);
-    // node.Draw();
-
-    // Scrolling
-    if (ImGui::IsWindowHovered() && !ImGui::IsAnyItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle, 0.0f))
-        _scrolling = _scrolling + io.MouseDelta;
-
-    _draw_list->ChannelsMerge();
-    ImGui::EndChild();
-    ImGui::PopStyleColor();
-    ImGui::PopStyleVar();
-    ImGui::EndGroup();
 }
