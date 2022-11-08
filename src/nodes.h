@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include <any>
 #include "abstract_node.h"
 
 // forward declaration
@@ -15,24 +16,24 @@ class PlugOut;
 class FloatNode : public AbstractNode
 {
 public:
-    FloatNode();
+    FloatNode(int& unique_id_reference);
     ~FloatNode();
 
     // override virtual functions
-    virtual std::vector<AbstractPlug*> GetPlugIns() const override;
-    virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
+    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugIns() const override;
+    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugOuts() const override;
     virtual bool Compute() override; 
 
     // edits the node default value, this node has no plugins,
     // this is the accessor to change the default value.
     void SetDefaultValue(float value);
 
-    PlugOut<float>* GetOutPlug()const;
+    std::shared_ptr<PlugOut<float>> GetOutPlug()const;
     
 private:
 
-    PlugOut<float>* _out_0;
-    float* _result;
+    std::shared_ptr<PlugOut<float>> _out_0;
+    std::shared_ptr<float> _result;
     float _default_value;
 };
 
@@ -40,30 +41,30 @@ private:
 class FloatAdditionNode : public AbstractNode
 {
 public:
-    FloatAdditionNode();
+    FloatAdditionNode(int& unique_id_reference);
     ~FloatAdditionNode();
 
     // override virtual functions
-    virtual std::vector<AbstractPlug*> GetPlugIns() const override;
-    virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
+    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugIns() const override;
+    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugOuts() const override;
     virtual bool Compute() override; 
 
     // edits the node default value, this node has no plugins,
     // this is the accessor to change the default value.
     void SetDefaultValue_0(float value);
     void SetDefaultValue_1(float Value);
-    PlugOut<float>* GetOutPlug()const;
+   std::shared_ptr<PlugOut<float>> GetOutPlug()const;
 
-    PlugIn<float>* GetPlugIn_0()const;
-    PlugIn<float>* GetPlugIn_1()const;
+    std::shared_ptr<PlugIn<float>> GetPlugIn_0()const;
+    std::shared_ptr<PlugIn<float>> GetPlugIn_1()const;
 
 private:
 
-    PlugOut<float>* _out_0;
-    PlugIn<float>* _in_0;
-    PlugIn<float>* _in_1;
+    std::shared_ptr<PlugOut<float>> _out_0;
+    std::shared_ptr<PlugIn<float>> _in_0;
+    std::shared_ptr<PlugIn<float>> _in_1;
 
-    float* _result;
+    std::shared_ptr<float> _result;
     float _default_value_0;
     float _default_value_1;
 };
@@ -72,19 +73,19 @@ private:
 class EvaluationNode : public AbstractNode
 {
 public:
-    EvaluationNode();
+    EvaluationNode(int& unique_id_reference);
     ~EvaluationNode();
 
     // override virtual functions
-    virtual std::vector<AbstractPlug*> GetPlugIns() const override;
-    virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
+    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugIns() const override;
+    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugOuts() const override;
     virtual bool Compute() override;
-    bool IterateGraph(AbstractNode* node);
+    bool IterateGraph(std::shared_ptr<AbstractNode> node);
 
-    PlugIn<float>* GetPlugIn_0()const;
+    std::shared_ptr<PlugIn<float>> GetPlugIn_0()const;
     bool GetResult(float& out_float) const;
 
 private:
-    PlugIn<float>* _in_0;
+    std::shared_ptr<PlugIn<float>> _in_0;
 
 };

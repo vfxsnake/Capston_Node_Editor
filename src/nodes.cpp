@@ -1,17 +1,19 @@
 #include <iostream>
+#include <memory>
 #include "nodes.h"
 #include "plug.hpp"
 
 
-FloatNode::FloatNode()
-{
-    // std::cout << "FloatNode constructor"<< std::endl; 
+FloatNode::FloatNode(int& unique_id_reference)
+{ 
+    SetId(++unique_id_reference);
+    std::cout << "FloatNode constructor id: "<< GetId() << std::endl;
     _default_value = FLOAT_DEFAULT_VALUE;
-    _result = new float{};
+    _result = std::make_shared<float>(float());
     *_result = FLOAT_DEFAULT_VALUE;
-    _out_0 = new PlugOut<float>{};
+    _out_0 =  std::make_shared<PlugOut<float>>(PlugOut<float>(++unique_id_reference));
     _out_0->SetReferenceToValue(_result);
-    _out_0->SetParent(this);
+    _out_0->SetParent(this->GetPointer());
 
     SetDirty(true);
 }
@@ -19,26 +21,25 @@ FloatNode::FloatNode()
 
 FloatNode::~FloatNode()
 {
-    // std::cout << "FloatNode destructor"<< std::endl;
-    delete _out_0;
-    delete _result;
+    std::cout << "FloatNode destructor id: "<<  GetId() <<std::endl;
+
 }
 
 
-std::vector<AbstractPlug*> FloatNode::GetPlugIns() const 
+std::vector<std::shared_ptr<AbstractPlug>> FloatNode::GetPlugIns() const 
 {
     return {};
 }
 
 
-std::vector<AbstractPlug*> FloatNode::GetPlugOuts() const
+std::vector<std::shared_ptr<AbstractPlug>> FloatNode::GetPlugOuts() const
 {
-    std::vector<AbstractPlug*> outputs;
+    std::vector<std::shared_ptr<AbstractPlug>> outputs;
     return {_out_0};
 }
 
 
-PlugOut<float>* FloatNode::GetOutPlug() const
+std::shared_ptr<PlugOut<float>> FloatNode::GetOutPlug() const
 {
     return _out_0;
 }
@@ -67,23 +68,24 @@ void FloatNode::SetDefaultValue(float value)
 
 
 // --------------------------------------------------- Float Addition Node -----------------------------------------------------------------
-FloatAdditionNode::FloatAdditionNode()
+FloatAdditionNode::FloatAdditionNode(int& unique_id_reference)
 {
-    // std::cout << "FloatAdditionNode constructor"<< std::endl; 
+    SetId(++unique_id_reference);
+    std::cout << "FloatAdditionNode constructor id: "<< GetId() << std::endl; 
     _default_value_0 = FLOAT_DEFAULT_VALUE;
     _default_value_0 = FLOAT_DEFAULT_VALUE;
-    _result = new float{};
+    _result = std::make_shared<float>(float());
     *_result = FLOAT_DEFAULT_VALUE;
     
-    _out_0 = new PlugOut<float>{};
-    _out_0->SetParent(this);
+    _out_0 = std::make_shared<PlugOut<float>>(PlugOut<float>(++unique_id_reference));
+    _out_0->SetParent(this->GetPointer());
     _out_0->SetReferenceToValue(_result);
 
-    _in_0 = new PlugIn<float>{};
-    _in_0->SetParent(this);
+    _in_0 = std::make_shared<PlugIn<float>>(++unique_id_reference);
+    _in_0->SetParent(this->GetPointer());
     
-    _in_1 = new PlugIn<float>{};
-    _in_1->SetParent(this);
+    _in_1 =std::make_shared<PlugIn<float>>(++unique_id_reference);
+    _in_1->SetParent(this->GetPointer());
     
     SetDirty(true);
 }
@@ -91,17 +93,13 @@ FloatAdditionNode::FloatAdditionNode()
 
 FloatAdditionNode::~FloatAdditionNode()
 {
-    // std::cout << "FloatAdditionNode destructor"<< std::endl;
-    delete _out_0;
-    delete _in_0;
-    delete _in_1;
-    delete _result;
+    std::cout << "FloatAdditionNode destructor id: "<< GetId() <<std::endl;
 }
 
 
-std::vector<AbstractPlug*> FloatAdditionNode::GetPlugIns() const 
+std::vector< std::shared_ptr<AbstractPlug>> FloatAdditionNode::GetPlugIns() const 
 {   
-    std::vector<AbstractPlug*> source_connections;
+    std::vector<std::shared_ptr<AbstractPlug>> source_connections;
     if(_in_0->GetSourcePlug())
         source_connections.emplace_back(_in_0->GetSourcePlug());
     if(_in_1->GetSourcePlug())
@@ -110,15 +108,13 @@ std::vector<AbstractPlug*> FloatAdditionNode::GetPlugIns() const
 }
 
 
-std::vector<AbstractPlug*> FloatAdditionNode::GetPlugOuts() const
-{
-    std::vector<AbstractPlug*> outputs;
-    
+std::vector< std::shared_ptr<AbstractPlug>> FloatAdditionNode::GetPlugOuts() const
+{    
     return {_out_0}; 
 }
 
-
-PlugOut<float>* FloatAdditionNode::GetOutPlug() const
+ 
+std::shared_ptr<PlugOut<float>> FloatAdditionNode::GetOutPlug() const
 {
     return _out_0;
 }
@@ -166,33 +162,33 @@ void FloatAdditionNode::SetDefaultValue_1(float value)
         SetDirty(true);
 }
 
-PlugIn<float>* FloatAdditionNode::GetPlugIn_0() const
+std::shared_ptr<PlugIn<float>> FloatAdditionNode::GetPlugIn_0() const
 {
     return _in_0;
 }
-PlugIn<float>* FloatAdditionNode::GetPlugIn_1()const
+std::shared_ptr<PlugIn<float>> FloatAdditionNode::GetPlugIn_1()const
 {
     return _in_1;
 }
 
 
 // --------------------------------------- evaluation node --------------------------------------
-EvaluationNode::EvaluationNode()
+EvaluationNode::EvaluationNode(int& unique_id_reference)
 {
-    // std::cout << "EvaluationNode constructor"<< std::endl;
-    _in_0 = new PlugIn<float>{};
-    _in_0->SetParent(this);
+    SetId(++unique_id_reference);
+    std::cout << "EvaluationNode constructor id: "<<  GetId() <<std::endl;
+    _in_0 = std::make_shared<PlugIn<float>>(++unique_id_reference);
+    _in_0->SetParent(this->GetPointer());
 }
 
 
 EvaluationNode::~EvaluationNode()
 {
-    // std::cout << "EvaluationNode destructor"<< std::endl;
-    delete _in_0;
+    std::cout << "EvaluationNode destructor id: "<< GetId() <<std::endl;
 }
 
 
-std::vector<AbstractPlug*> EvaluationNode::GetPlugIns() const 
+std::vector<std::shared_ptr<AbstractPlug>> EvaluationNode::GetPlugIns() const 
 {
     if(_in_0->GetSourcePlug())
         return {_in_0->GetSourcePlug()};
@@ -200,13 +196,13 @@ std::vector<AbstractPlug*> EvaluationNode::GetPlugIns() const
 }
 
 
-std::vector<AbstractPlug*> EvaluationNode::GetPlugOuts() const
+std::vector<std::shared_ptr<AbstractPlug>> EvaluationNode::GetPlugOuts() const
 {
     return {};
 }
 
 
-bool EvaluationNode::IterateGraph(AbstractNode* node)
+bool EvaluationNode::IterateGraph(std::shared_ptr<AbstractNode> node)
 {    
     for(auto x : node->GetPlugIns())
     {
@@ -240,7 +236,7 @@ bool EvaluationNode::Compute()
 } 
 
 
-PlugIn<float>* EvaluationNode::GetPlugIn_0() const
+std::shared_ptr<PlugIn<float>> EvaluationNode::GetPlugIn_0() const
 {
     return _in_0;
 }

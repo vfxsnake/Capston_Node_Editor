@@ -4,22 +4,31 @@
 #include "imnodes.h"
 
 
-// change this to basic math functions
-static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
-static inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
-
-NodeEditor::NodeEditor(int canvas_id, const char* canvas_name) : _id(canvas_id), _name(canvas_name)
+/*
+    NodeEditor class manages the Node system
+    creates nodes and register the nodes, plugs y links
+    It contains a map structure so we can relate node plugs to node container plug.
+*/
+NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start) : 
+                                                                                _id(canvas_id), // canvas window id to be recognized by imgui
+                                                                                _name(canvas_name), 
+                                                                                node_ui_id(node_ui_id_start) // offset when reloading an existing graph
 {
-    _scrolling = ImVec2(0.0f, 0.0f);
+    // Start the Graph node system provided by ImNodes.
     ImNodes::CreateContext();
 }
 
 
 NodeEditor::~NodeEditor()
 {
+    // Cleans all resources used by ImNodes.
     ImNodes::DestroyContext();
 }
 
+/*
+    Main draw function for the node editor.
+    Draws the Node out-liner creator, the Node canvas.
+*/
 void NodeEditor::Draw()
 {
     ImGui::SetNextWindowSize(ImVec2(700, 600), ImGuiCond_FirstUseEver);
@@ -57,15 +66,39 @@ void NodeEditor::DrawOutLiner()
     ImGui::EndChild();
 }
 
+
 void NodeEditor::DrawCanvas()
 {
     ImNodes::BeginNodeEditor();
-
     
+    // draw Nodes
+
+    // draw links
+    
+
     ImNodes::EndNodeEditor();
+    
     int start_attr, end_attr;
     if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
     {
         std::cout << "link created from : " << start_attr << " " << end_attr << std::endl;
+        // call node editors create link and add it to the link list
     }
+
+    int link_id;
+    if(ImNodes::IsLinkDestroyed(&link_id))
+    {
+        std::cout << "link destroyed" << std::endl;
+        // call destroy link and releases the connection
+    }
+}
+
+void NodeEditor::DrawNodes()
+{
+    // implement draw containers
+}
+
+void NodeEditor::DrawLinks()
+{
+    // implements draw links
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <math.h> // fmodf
+#include <vector>
 #include "imgui.h"
 
 // #include "node_base.hpp"
@@ -14,29 +14,23 @@
     connect the nodes. 
     It contains a file menu to save and load previous node graphs
 */
+
+// forward declarations
+class NodeContainers;
+class Links;
+
 class NodeEditor
 {
 public:
     // this class must apply the rule of five as it will be a unique pointer in the app.
-    NodeEditor(int canvas_id, const char* canvas_name);
+    NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start=0);
     // destructor
     ~NodeEditor();
-
-    // copy constructor
-    NodeEditor(NodeEditor &source);
-    // copy operator
-    NodeEditor& operator=(NodeEditor &source);
-
-    // move constructor
-    NodeEditor(NodeEditor &&source);
-
-    // move operator
-    NodeEditor& operator=(NodeEditor &&source); 
 
     void Draw();
 
     // getters
-    int GetID();
+    int GetNodeEditorId();
     const char* GetName();
 
     // create node
@@ -45,17 +39,16 @@ public:
 private:
 
     void DrawCanvas();
-    void DrawGrid();
     void DrawOutLiner();
+    void DrawNodes();
+    void DrawLinks();
 
-    int _id;
+    int _id; // window id for imgui
     const char* _name;
 
-    bool _show_grid = true;
-    ImVec2 _scrolling;
-    ImDrawList* _draw_list;
     int _out_liner_width = 150;
-    // std::vector<Node> nodes; // implement the array of nodes
-    // std::vector<Link> links; // implement the array of links should be a class to call draw function of each node and link
+    int node_ui_id;
+    // std::vector<NodeContainers> _node_list; // implement the array of nodes
+    // std::vector<Links> link_list; // implement the array of links should be a class to call draw function of each node and link
 
 };
