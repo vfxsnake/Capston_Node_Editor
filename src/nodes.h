@@ -20,20 +20,23 @@ public:
     ~FloatNode();
 
     // override virtual functions
-    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugIns() const override;
-    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugOuts() const override;
+    virtual std::vector<AbstractPlug*> GetPlugIns() const override;
+    virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
     virtual bool Compute() override; 
 
     // edits the node default value, this node has no plugins,
     // this is the accessor to change the default value.
     void SetDefaultValue(float value);
+    float GetDefaultValue();
 
-    std::shared_ptr<PlugOut<float>> GetOutPlug()const;
+    PlugOut<float>* GetOutPlug()const;
     
+    float* GetResultReference();
+
 private:
 
-    std::shared_ptr<PlugOut<float>> _out_0;
-    std::shared_ptr<float> _result;
+    std::unique_ptr<PlugOut<float>> _out_0;
+    std::unique_ptr<float> _result;
     float _default_value;
 };
 
@@ -45,26 +48,30 @@ public:
     ~FloatAdditionNode();
 
     // override virtual functions
-    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugIns() const override;
-    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugOuts() const override;
+    virtual std::vector<AbstractPlug*> GetPlugIns() const override;
+    virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
     virtual bool Compute() override; 
 
-    // edits the node default value, this node has no plugins,
-    // this is the accessor to change the default value.
+    // this values will be updated by the ui and will be used to compute
+    // in case theres no connections in the PlugIns.
     void SetDefaultValue_0(float value);
     void SetDefaultValue_1(float Value);
-   std::shared_ptr<PlugOut<float>> GetOutPlug()const;
 
-    std::shared_ptr<PlugIn<float>> GetPlugIn_0()const;
-    std::shared_ptr<PlugIn<float>> GetPlugIn_1()const;
+   PlugOut<float>* GetOutPlug()const;
+
+    PlugIn<float>* GetPlugIn_0()const;
+    PlugIn<float>* GetPlugIn_1()const;
 
 private:
-
-    std::shared_ptr<PlugOut<float>> _out_0;
-    std::shared_ptr<PlugIn<float>> _in_0;
-    std::shared_ptr<PlugIn<float>> _in_1;
-
-    std::shared_ptr<float> _result;
+    // unique pointers to plugs.
+    // the ownership of the plugs belongs to the node.
+    std::unique_ptr<PlugOut<float>> _out_0;
+    std::unique_ptr<PlugIn<float>> _in_0;
+    std::unique_ptr<PlugIn<float>> _in_1;
+    
+    // the result of the computation is saved in _result
+    // and the ownership of this resource belongs to the node. 
+    std::unique_ptr<float> _result;
     float _default_value_0;
     float _default_value_1;
 };
@@ -77,15 +84,16 @@ public:
     ~EvaluationNode();
 
     // override virtual functions
-    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugIns() const override;
-    virtual std::vector<std::shared_ptr<AbstractPlug>> GetPlugOuts() const override;
+    virtual std::vector<AbstractPlug*> GetPlugIns() const override;
+    virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
     virtual bool Compute() override;
     bool IterateGraph(std::shared_ptr<AbstractNode> node);
 
-    std::shared_ptr<PlugIn<float>> GetPlugIn_0()const;
-    bool GetResult(float& out_float) const;
+    PlugIn<float>* GetPlugIn_0()const;
+    bool GetResultValue(float& out_float) const;
 
 private:
-    std::shared_ptr<PlugIn<float>> _in_0;
+    // reference to the last node in the network
+    std::unique_ptr<PlugIn<float>> _in_0;
 
 };

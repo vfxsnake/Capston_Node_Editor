@@ -27,7 +27,7 @@ int AbstractNode::GetId()
     return _id;
 }
 
-std::shared_ptr<AbstractNode> AbstractNode::GetPointer()
+AbstractNode* AbstractNode::GetPointer()
 {
-    return shared_from_this();
+    // return shared_from_this();
 }

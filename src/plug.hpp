@@ -19,7 +19,7 @@ public:
     
 
     // getters
-    std::shared_ptr<AbstractNode> GetParent() const
+    AbstractNode* GetParent() const
     {
         return _parent_node;
     }
@@ -32,7 +32,7 @@ public:
     virtual void PrintValue() const =0;
 
     // setters
-    void SetParent(std::shared_ptr<AbstractNode> parent_node)
+    void SetParent(AbstractNode* parent_node)
     {
         _parent_node = parent_node;
     }
@@ -45,7 +45,7 @@ public:
 
 private:
     // reference to the parent node, to query the status
-    std::shared_ptr<AbstractNode> _parent_node;
+    AbstractNode* _parent_node;
     int _id = 0;
 };
 
@@ -60,6 +60,7 @@ public:
         // std::cout << "plug constructor" << std::endl;
         SetId(id);
     }
+
     ~PlugIn()
     {
         // std::cout << "plug destructor" << std::endl;
@@ -67,57 +68,22 @@ public:
         SetParent(nullptr);
     }
 
-    // deep copy
-    PlugIn(PlugIn<T>& source_plug_in)
-    {
-        SetId(source_plug_in.GetId());
-        _source_plug = source_plug_in.GetSourcePlug();
-        SetParent(source_plug_in.GetParent());
-    }
-
-    // copy assign operator
-    PlugIn& operator =(PlugIn& source_plug_in)
-    {
-        if(source_plug_in == this)
-            return this;
-        
-        this->SetId(source_plug_in.GetId());
-        this->SetSourcePlug(source_plug_in.GetSourcePlug());
-        this->SetParent(source_plug_in.GetParent());
-    }
-
-    // move constructor
-    PlugIn(PlugIn &&source_plug_in)
-    {
-        this->SetId(source_plug_in.GetId());
-        this->SetSourcePlug(source_plug_in.GetSourcePlug);
-        this->SetParent(source_plug_in.GetParent());
-    }
-
-    // move assign operator
-    PlugIn& operator =(PlugIn &&source_plug_in)
-    {
-        if(source_plug_in == this)
-            return this;
-        
-        this->SetId(source_plug_in.GetId());
-        this->SetSourcePlug(source_plug_in.GetSourcePlug());
-        this->SetParent(source_plug_in.GetParent());
-    }
-
     // getters
-    std::shared_ptr<PlugOut<T>> GetSourcePlug() const
+    PlugOut<T>* GetSourcePlug() const
     {
         return _source_plug;
     }
 
     virtual void PrintValue() const override
     {
-        _source_plug->PrintValue();
+        if(_source_plug)
+            _source_plug->PrintValue();
+        else
+            std::cout << "nothing connect to this plug" << std::endl;
     }
 
     // setter    
-    void SetSourcePlug(PlugOut<T>* source_plug)
+    void SetSourcePlug(PlugOut<T> source_plug)
     {
         _source_plug = source_plug;
         if(GetParent())
@@ -125,8 +91,8 @@ public:
     } 
 
 private:
-
-    std::shared_ptr<PlugOut<T>> _source_plug;
+    // stores the reference to the pointer of OutPlug to make the connection.  
+    PlugOut<T>* _source_plug;
 };
 
 
@@ -139,66 +105,37 @@ public:
         // std::cout << "plug constructor" << std::endl;
         SetId(id);
     }
+
     ~PlugOut()
     {
         // std::cout << "plug destructor" << std::endl;
         SetParent(nullptr);
     }
 
-    // deep copy constructor
-    PlugOut(PlugOut& source_out_plug)
-    {
-        // std::cout << "plug constructor" << std::endl;
-        SetId(source_out_plug.GetID());
-        SetParent(source_out_plug.GetParent());
-        _reference_to_value = source_out_plug.GetReferenceToValue();
-    }
-
-    // copy assign operator
-    PlugOut operator =(PlugOut& source_out_plug)
-    {
-        if(&source_out_plug == this)
-            return this;
-        
-        SetId(source_out_plug.GetId());
-        SetParent(source_out_plug.GetParent());
-        _reference_to_value = source_out_plug.GetReferenceToValue();
-    }
-    // move constructor
-    PlugOut(PlugOut &&source_out_plug)
-    {
-        SetId(source_out_plug.GetId());
-        SetParent(source_out_plug.GetParent());
-        _reference_to_value = source_out_plug.GetReferenceToValue();
-    }
-
-    // move assign operator
-
-
     // getters
-    std::shared_ptr<T> GetReferenceToValue()
+     T* GetPointerToValue()
     {
-        return _reference_to_value;
+        return _pointer_to_value;
     }    
 
-    T GetReferenceValue() const
+    T DeReferenceValue() const
     {
-        return *_reference_to_value;
+        return *_pointer_to_value;
     }
 
 
     virtual void PrintValue() const override
     {
-        std::cout << GetReferenceValue() << std::endl;
+        std::cout << DeReferenceValue() << std::endl;
     }
 
     // setter
-    void SetReferenceToValue(std::shared_ptr<T> value)
+    void SetReferenceToValue(T* value)
     {
-        _reference_to_value = value;
+        _pointer_to_value = value;
     }
     
 private:
     // variable pointing to the value stored in the node 
-    std::shared_ptr<T> _reference_to_value = nullptr;
+    T* _pointer_to_value = nullptr;
 };

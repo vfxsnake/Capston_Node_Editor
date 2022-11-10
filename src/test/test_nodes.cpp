@@ -6,23 +6,32 @@
 int main()
 {
     std::cout << "-----------------testing plug base-------------"<< std::endl;
-    // int globalId = 0;
+    int globalId = 0;
     // // PlugOut float
-    // PlugOut<float> plug_out_float(globalId);
-    // float temp_float = 5.23;
-    // plug_out_float.SetReferenceToValue(&temp_float);
+    PlugOut<float> plug_out_float(++globalId);
+    
+    // std::shared_ptr<float> temp_float(std::make_shared<float>(float(3.54)));
+    // plug_out_float.SetReferenceToValue(temp_float);
     // plug_out_float.PrintValue();
+    // std::cout << "plug_out_id: " << plug_out_float.GetId() << std::endl;
 
     // // PlugIn float
     // PlugIn<float> plug_in_float(globalId);
-    // plug_in_float.SetSourcePlug(&plug_out_float);
+    // plug_in_float.SetSourcePlug( std::make_shared<PlugOut<float>>(plug_out_float));
+    // std::cout << "plugIn id: " << plug_in_float.GetId() << std::endl;
+    // std::cout << "reference plug id: " << plug_in_float.GetSourcePlug()->GetId() <<std::endl;
+    // std::cout << "plug in reference value : " << plug_in_float.GetSourcePlug()->GetReferenceValue() << std::endl;
+    // plug_in_float.PrintValue();
 
+    // test Nodes
+    std::cout << "-----------------testing nodes--------------------------" << std::endl;
+    FloatNode float_node1(globalId);
+    
+    // float_node1->SetDefaultValue(50.34f);
+    // float_node1->Compute();
+    // float_node1->GetOutPlug()->PrintValue();
 
-    // // test Nodes
-    // std::cout << "-----------------testing nodes--------------------------";
-    // FloatNode float_node_test1(globalId);
-
-    // float_node_test1.SetDefaultValue(4.321);
+    // float_node_test1->SetDefaultValue(4.321);
     // std::cout << "node is dirty ? " << float_node_test1.IsDirty() << std::endl;
     // std::cout << "plugsIns ? " << float_node_test1.GetPlugIns().size() << std::endl;
     // std::cout << "plugsIns ? " << float_node_test1.GetPlugOuts().size() << std::endl;
