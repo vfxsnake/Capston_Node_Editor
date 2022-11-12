@@ -87,7 +87,7 @@ public:
     virtual std::vector<AbstractPlug*> GetPlugIns() const override;
     virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
     virtual bool Compute() override;
-    bool IterateGraph(std::shared_ptr<AbstractNode> node);
+    bool IterateGraph(AbstractNode* node);
 
     PlugIn<float>* GetPlugIn_0()const;
     bool GetResultValue(float& out_float) const;

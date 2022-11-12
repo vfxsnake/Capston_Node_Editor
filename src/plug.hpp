@@ -20,7 +20,7 @@ public:
 
     // getters
     AbstractNode* GetParent() const
-    {
+    {   
         return _parent_node;
     }
 
@@ -45,7 +45,7 @@ public:
 
 private:
     // reference to the parent node, to query the status
-    AbstractNode* _parent_node;
+    AbstractNode* _parent_node=nullptr;
     int _id = 0;
 };
 
@@ -57,13 +57,13 @@ class PlugIn : public AbstractPlug
 public:
     PlugIn(float id) 
     {
-        // std::cout << "plug constructor" << std::endl;
         SetId(id);
+        std::cout << "plugIn constructor id: "<< GetId() << std::endl;
     }
 
     ~PlugIn()
     {
-        // std::cout << "plug destructor" << std::endl;
+        std::cout << "plugIn destructor << id: "<< GetId() << std::endl;
         _source_plug = nullptr;
         SetParent(nullptr);
     }
@@ -83,7 +83,7 @@ public:
     }
 
     // setter    
-    void SetSourcePlug(PlugOut<T> source_plug)
+    void SetSourcePlug(PlugOut<T>* source_plug)
     {
         _source_plug = source_plug;
         if(GetParent())
@@ -92,7 +92,7 @@ public:
 
 private:
     // stores the reference to the pointer of OutPlug to make the connection.  
-    PlugOut<T>* _source_plug;
+    PlugOut<T>* _source_plug=nullptr;
 };
 
 
@@ -102,13 +102,13 @@ class PlugOut : public AbstractPlug
 public:
     PlugOut(float id)
     {
-        // std::cout << "plug constructor" << std::endl;
         SetId(id);
+        std::cout << "plugOut constructor id: " << GetId() <<std::endl;
     }
 
     ~PlugOut()
     {
-        // std::cout << "plug destructor" << std::endl;
+        std::cout << "plugOut destructor id: "<< GetId() << std::endl;
         SetParent(nullptr);
     }
 
