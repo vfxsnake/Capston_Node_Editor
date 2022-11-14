@@ -7,8 +7,13 @@
 // forward declaration
 template<class>
 class PlugIn;
+
 template<class>
 class PlugOut;
+
+template<class>
+struct NodeAttribute;
+
 
 // CONSTANTS
 #define FLOAT_DEFAULT_VALUE 0.0f
@@ -30,14 +35,14 @@ public:
     float GetDefaultValue();
 
     PlugOut<float>* GetOutPlug()const;
-    
+    int GetDefaultValueId();
     float* GetResultReference();
 
 private:
 
     std::unique_ptr<PlugOut<float>> _out_0;
     std::unique_ptr<float> _result;
-    float _default_value;
+    std::unique_ptr<NodeAttribute<float>> _default_attr;
 };
 
 
@@ -72,8 +77,8 @@ private:
     // the result of the computation is saved in _result
     // and the ownership of this resource belongs to the node. 
     std::unique_ptr<float> _result;
-    float _default_value_0;
-    float _default_value_1;
+    std::unique_ptr<NodeAttribute<float>> _default_attr_0;
+    std::unique_ptr<NodeAttribute<float>> _default_attr_1;
 };
 
 

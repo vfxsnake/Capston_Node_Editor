@@ -72,30 +72,7 @@ void NodeEditor::DrawCanvas()
     ImNodes::BeginNodeEditor();
     
     // draw Nodes
-    ImNodes::BeginNode(10);
 
-    ImNodes::BeginNodeTitleBar();
-    ImGui::TextUnformatted("node");
-    ImNodes::EndNodeTitleBar();
-
-    ImNodes::BeginInputAttribute(11);
-    ImGui::TextUnformatted("input");
-    ImNodes::EndInputAttribute();
-
-    ImNodes::BeginStaticAttribute(12);
-    ImGui::PushItemWidth(120.0f);
-    float temp;
-    ImGui::DragFloat("value", &temp, 0.01f);
-    ImGui::PopItemWidth();
-    ImNodes::EndStaticAttribute();
-
-    ImNodes::BeginOutputAttribute(13);
-    const float text_width = ImGui::CalcTextSize("output").x;
-    ImGui::Indent(120.f + ImGui::CalcTextSize("value").x - text_width);
-    ImGui::TextUnformatted("output");
-    ImNodes::EndOutputAttribute();
-
-    ImNodes::EndNode();
 
     // draw links
     

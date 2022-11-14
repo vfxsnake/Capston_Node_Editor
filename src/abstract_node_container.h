@@ -1,5 +1,4 @@
 #pragma once
-#include <imnodes.h>
 #include <imgui.h>
 
 class AbstractNodeContainer
