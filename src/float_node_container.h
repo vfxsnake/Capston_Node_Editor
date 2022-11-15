@@ -13,5 +13,4 @@ public:
 
 private:
      std::unique_ptr<FloatNode> _logic;
-     float* _value;
 };

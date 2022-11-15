@@ -1,28 +1,28 @@
 #include <iostream>
 #include <memory>
 #include <imnodes.h>
-#include "float_node_container.h"
+#include "float_addition_node_container.h"
 #include "nodes.h"
 #include "plug.hpp"
 
-FloatNodeContainer::FloatNodeContainer(int &global_id)
+FloatAdditionNodeContainer::FloatAdditionNodeContainer(int &global_id)
 {
-    _logic = std::unique_ptr<FloatNode>(new FloatNode(global_id));
+    _logic = std::unique_ptr<FloatAdditionNode>(new FloatAdditionNode(global_id));
     SetId(_logic->GetId()); 
     std::cout << "constructor floatNodeContainer id: " << std::endl;
 }
 
-FloatNodeContainer::~FloatNodeContainer()
+FloatAdditionNodeContainer::~FloatAdditionNodeContainer()
 {
     std::cout << "destructor floatNodeContainer id: "<< GetId() << std::endl;
 }
 
-void FloatNodeContainer::DrawNode() const
+void FloatAdditionNodeContainer::DrawNode() const
 {
     // node begin
     ImNodes::BeginNode(GetId());
     ImNodes::BeginNodeTitleBar();
-    ImGui::TextUnformatted("Float Node");
+    ImGui::TextUnformatted("Float Addition Node");
     ImNodes::EndNodeTitleBar();
     
     // attribute definition.

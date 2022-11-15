@@ -32,16 +32,13 @@ public:
     // edits the node default value, this node has no plugins,
     // this is the accessor to change the default value.
     void SetDefaultValue(float value);
-    float GetDefaultValue();
-    float* GetDefaultValueReference();
+    float GetDefaultValue() const;
+    int GetDefaultValueId();
 
     PlugOut<float>* GetOutPlug()const;
-    int GetDefaultValueId();
     float* GetResultReference();
     
-
 private:
-
     std::unique_ptr<PlugOut<float>> _out_0;
     std::unique_ptr<float> _result;
     std::unique_ptr<NodeAttribute<float>> _default_attr;
@@ -59,10 +56,12 @@ public:
     virtual std::vector<AbstractPlug*> GetPlugOuts() const override;
     virtual bool Compute() override; 
 
-    // this values will be updated by the ui and will be used to compute
-    // in case theres no connections in the PlugIns.
+    // accessors to default values
     void SetDefaultValue_0(float value);
-    void SetDefaultValue_1(float Value);
+    int GetDefaultValue_0_Id() const;
+    
+    void SetDefaultValue_1(float value);
+    int GetDefaultValue_1_Id() const;
 
    PlugOut<float>* GetOutPlug()const;
 

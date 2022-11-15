@@ -83,7 +83,7 @@ void FloatNode::SetDefaultValue(float value)
 }
 
 
-float FloatNode::GetDefaultValue()
+float FloatNode::GetDefaultValue() const
 {
     return _default_attr->_value;
 }
@@ -99,18 +99,23 @@ int FloatNode::GetDefaultValueId()
     return _default_attr->_id;
 }
 
-float* FloatNode::GetDefaultValueReference()
-{
-    return &_default_attr->_value;
-}
+// float* FloatNode::GetDefaultValueReference() const
+// {
+//     return &_default_attr->_value;
+// }
+
 
 // --------------------------------------------------- Float Addition Node -----------------------------------------------------------------
 FloatAdditionNode::FloatAdditionNode(int& unique_id_reference)
 {
     SetId(++unique_id_reference);
     std::cout << "FloatAdditionNode constructor id: "<< GetId() << std::endl; 
+    _default_attr_0 = std::make_unique<NodeAttribute<float>>(NodeAttribute<float>(++unique_id_reference));
     _default_attr_0->_value = FLOAT_DEFAULT_VALUE;
-    _default_attr_0->_value = FLOAT_DEFAULT_VALUE;
+
+    _default_attr_1 = std::make_unique<NodeAttribute<float>>(NodeAttribute<float>(++unique_id_reference));
+    _default_attr_1->_value = FLOAT_DEFAULT_VALUE;
+    
     _result = std::make_unique<float>(float());
     *_result = FLOAT_DEFAULT_VALUE;
     
@@ -181,7 +186,7 @@ bool FloatAdditionNode::Compute()
         *_result = value_0 + value_1;
         return true;
     }
-            
+
     return false;
 }
 
@@ -193,6 +198,12 @@ void FloatAdditionNode::SetDefaultValue_0(float value)
         SetDirty(true);
 }
 
+int FloatAdditionNode::GetDefaultValue_0_Id() const
+{
+    return _default_attr_0->_id;
+}
+
+
 void FloatAdditionNode::SetDefaultValue_1(float value)
 {
     _default_attr_1->_value = value;
@@ -200,10 +211,13 @@ void FloatAdditionNode::SetDefaultValue_1(float value)
         SetDirty(true);
 }
 
+
 PlugIn<float>* FloatAdditionNode::GetPlugIn_0() const
 {
     return _in_0.get();
 }
+
+
 PlugIn<float>* FloatAdditionNode::GetPlugIn_1()const
 {
     return _in_1.get();
