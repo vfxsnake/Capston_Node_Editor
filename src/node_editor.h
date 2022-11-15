@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "imgui.h"
 
 // #include "node_base.hpp"
@@ -18,6 +19,7 @@
 // forward declarations
 class NodeContainers;
 class Links;
+class AbstractNodeContainer;
 
 class NodeEditor
 {
@@ -49,5 +51,6 @@ private:
     const char* _name;
 
     int _out_liner_width = 150;
-    int node_ui_id;
+    int _global_id_count = 0;
+    std::vector<std::unique_ptr<AbstractNodeContainer>> _node_list; 
 };

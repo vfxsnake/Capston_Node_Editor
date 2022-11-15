@@ -2,6 +2,8 @@
 #include "node_editor.h"
 #include "imgui.h"
 #include "imnodes.h"
+#include "abstract_node_container.h"
+#include "float_node_container.h"
 
 
 /*
@@ -12,9 +14,13 @@
 NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start) : 
                                                                                 _id(canvas_id), // canvas window id to be recognized by imgui
                                                                                 _name(canvas_name), 
-                                                                                node_ui_id(node_ui_id_start) // offset when reloading an existing graph
+                                                                                _global_id_count(node_ui_id_start) // offset when reloading an existing graph
 {
     // Start the Graph node system provided by ImNodes.
+    _global_id_count = 0;
+    _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatNodeContainer(_global_id_count)));
+    _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatNodeContainer(_global_id_count)));
+
     ImNodes::CreateContext();
 }
 
@@ -72,8 +78,10 @@ void NodeEditor::DrawCanvas()
     ImNodes::BeginNodeEditor();
     
     // draw Nodes
-
-
+    for (std::unique_ptr<AbstractNodeContainer>& node : _node_list)
+    {
+        node->DrawNode();
+    }
     // draw links
     
 

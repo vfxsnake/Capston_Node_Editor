@@ -33,10 +33,12 @@ public:
     // this is the accessor to change the default value.
     void SetDefaultValue(float value);
     float GetDefaultValue();
+    float* GetDefaultValueReference();
 
     PlugOut<float>* GetOutPlug()const;
     int GetDefaultValueId();
     float* GetResultReference();
+    
 
 private:
 

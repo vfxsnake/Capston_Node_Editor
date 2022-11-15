@@ -53,6 +53,12 @@ include_directories(${imnodes_Includes})
 
 
 add_executable(capstone_node_editor
+               src/node_attribute.hpp
+               src/abstract_node.cpp
+               src/nodes.cpp
+               src/abstract_node_container.cpp
+               src/float_node_container.cpp
+               src/plug.hpp
                src/node_editor.cpp
                src/glfw_app_base.hpp
                src/app.cpp

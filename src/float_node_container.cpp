@@ -2,13 +2,13 @@
 #include <memory>
 #include <imnodes.h>
 #include "float_node_container.h"
-#include <nodes.h>
-#include <plug.hpp>
+#include "nodes.h"
+#include "plug.hpp"
 
 FloatNodeContainer::FloatNodeContainer(int &global_id)
 {
-    _logic = std::make_unique<FloatNode>(FloatNode(global_id));
-    SetId(_logic->GetId());
+    _logic = std::unique_ptr<FloatNode>(new FloatNode(global_id));
+    SetId(_logic->GetId()); 
     std::cout << "constructor floatNodeContainer id: " << std::endl;
 }
 
@@ -22,14 +22,14 @@ void FloatNodeContainer::DrawNode() const
     // node begin
     ImNodes::BeginNode(GetId());
     ImNodes::BeginNodeTitleBar();
-    ImGui::TextUnformatted(_logic->GetName());
+    ImGui::TextUnformatted("Float Node");
     ImNodes::EndNodeTitleBar();
     
     // attribute definition.
     ImNodes::BeginStaticAttribute(_logic->GetDefaultValueId());
     ImGui::PushItemWidth(120.0f);
-    float dynamic_value;
-    ImGui::DragFloat("value", &dynamic_value, 0.01f);
+    float dynamic_value = _logic->GetDefaultValue();
+    ImGui::DragFloat("value",&dynamic_value, 0.01f);
     _logic->SetDefaultValue(dynamic_value);
     ImGui::PopItemWidth();
     ImNodes::EndStaticAttribute();
@@ -42,4 +42,5 @@ void FloatNodeContainer::DrawNode() const
     ImNodes::EndOutputAttribute();
 
     ImNodes::EndNode();
+    
 }
