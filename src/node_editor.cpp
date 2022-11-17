@@ -5,7 +5,8 @@
 #include "abstract_node_container.h"
 #include "float_node_container.h"
 #include "float_addition_node_container.h"
-
+#include "evaluate_node_container.h"
+#include "link.hpp"
 
 /*
     NodeEditor class manages the Node system
@@ -22,6 +23,7 @@ NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_st
     _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatNodeContainer(_global_id_count)));
     _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatNodeContainer(_global_id_count)));
     _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatAdditionNodeContainer(_global_id_count)));
+    _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new EvaluateNodeContainer(_global_id_count)));
 
     ImNodes::CreateContext();
 }
@@ -84,8 +86,12 @@ void NodeEditor::DrawCanvas()
     {
         node->DrawNode();
     }
+
     // draw links
-    
+    for (std::unique_ptr<Link>& link : _link_list)
+    {
+        link->DrawLink();
+    }
 
     ImNodes::EndNodeEditor();
     
@@ -94,6 +100,7 @@ void NodeEditor::DrawCanvas()
     {
         std::cout << "link created from : " << start_attr << " " << end_attr << std::endl;
         // call node editors create link and add it to the link list
+        _link_list.emplace_back(std::make_unique<Link>(++_global_id_count ,start_attr, end_attr));
     }
 
     int link_id;

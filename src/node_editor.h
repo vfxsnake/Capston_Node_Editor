@@ -18,8 +18,8 @@
 
 // forward declarations
 class NodeContainers;
-class Links;
 class AbstractNodeContainer;
+struct Link;
 
 class NodeEditor
 {
@@ -52,5 +52,6 @@ private:
 
     int _out_liner_width = 150;
     int _global_id_count = 0;
-    std::vector<std::unique_ptr<AbstractNodeContainer>> _node_list; 
+    std::vector<std::unique_ptr<AbstractNodeContainer>> _node_list;
+    std::vector<std::unique_ptr<Link>> _link_list;
 };

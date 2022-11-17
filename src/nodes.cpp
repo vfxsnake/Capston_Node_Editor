@@ -245,6 +245,8 @@ EvaluationNode::EvaluationNode(int& unique_id_reference)
     std::cout << "EvaluationNode constructor id: "<<  GetId() <<std::endl;
     _in_0 = std::make_unique<PlugIn<float>>(++unique_id_reference);
     _in_0->SetParent(this);
+    _compute_result = std::make_unique<NodeAttribute<float>>(++unique_id_reference);
+    _compute_result->_value = 0;
 }
 
 
@@ -302,7 +304,7 @@ bool EvaluationNode::Compute()
             IterateGraph(_in_0->GetSourcePlug()->GetParent());
         }
     // just for debugging 
-        GetPlugIn_0()->PrintValue();
+        _compute_result->_value = _in_0->GetSourcePlug()->DeReferenceValue(); 
         return true;
     }
     return false;
@@ -315,10 +317,12 @@ PlugIn<float>* EvaluationNode::GetPlugIn_0() const
 }
 
 
-bool EvaluationNode::GetResultValue(float& out_float) const
+float EvaluationNode::GetResultValue() const
 {
-    if (GetPlugIn_0()->GetSourcePlug())
-        out_float = GetPlugIn_0()->GetSourcePlug()->DeReferenceValue();
-        return true;
-    return false;
+    return _compute_result->_value;
+}
+
+int EvaluationNode::GetResultId() const
+{
+    return _compute_result->_id;
 }

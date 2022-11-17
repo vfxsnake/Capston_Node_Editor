@@ -59,6 +59,7 @@ add_executable(capstone_node_editor
                src/abstract_node_container.cpp
                src/float_node_container.cpp
                src/float_addition_node_container.cpp
+               src/evaluate_node_container.cpp
                src/plug.hpp
                src/node_editor.cpp
                src/glfw_app_base.hpp

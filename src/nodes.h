@@ -98,10 +98,11 @@ public:
     bool IterateGraph(AbstractNode* node);
 
     PlugIn<float>* GetPlugIn_0()const;
-    bool GetResultValue(float& out_float) const;
+    float GetResultValue() const;
+    int GetResultId() const;
 
 private:
     // reference to the last node in the network
+    std::unique_ptr<NodeAttribute<float>> _compute_result;
     std::unique_ptr<PlugIn<float>> _in_0;
-
 };

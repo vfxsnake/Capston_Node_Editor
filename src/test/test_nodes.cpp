@@ -123,14 +123,17 @@ int main()
     evaluate1.GetPlugIn_0()->SetSourcePlug(add3.GetOutPlug());
     std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<< compute <<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
     evaluate1.Compute();
+     std::cout << "compute value : " << evaluate1.GetResultValue() << std::endl;
 
     std::cout << "no changes compute: ====================================" << std::endl;
     evaluate1.Compute();
+    std::cout << "compute value : " << evaluate1.GetResultValue() << std::endl;
 
     std::cout << "node changed : ------------------------------------" << std::endl;
     node4.SetDefaultValue(3.5);
     std::cout << "node1 is dirty?" << node1.IsDirty() << std::endl;
     evaluate1.Compute();
+    std::cout << "compute value : " << evaluate1.GetResultValue() << std::endl;
     std::cout << "----------------------" << std::endl;
     
     std::cout <<"global id : " << globalId << std::endl;
