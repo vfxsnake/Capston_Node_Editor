@@ -20,7 +20,7 @@ FloatNode::FloatNode(int& unique_id_reference)
     SetId(++unique_id_reference);
     std::cout << "FloatNode constructor id: "<< GetId() << std::endl;
     _default_attr = std::make_unique<NodeAttribute<float>>(NodeAttribute<float>(++unique_id_reference));
-    _default_attr->_value = 10.0;
+    _default_attr->_value = FLOAT_DEFAULT_VALUE;
     _result = std::make_unique<float>(float());
     *_result = FLOAT_DEFAULT_VALUE;
     _out_0 =  std::make_unique<PlugOut<float>>(PlugOut<float>(++unique_id_reference));
@@ -99,11 +99,6 @@ int FloatNode::GetDefaultValueId()
     return _default_attr->_id;
 }
 
-// float* FloatNode::GetDefaultValueReference() const
-// {
-//     return &_default_attr->_value;
-// }
-
 
 // --------------------------------------------------- Float Addition Node -----------------------------------------------------------------
 FloatAdditionNode::FloatAdditionNode(int& unique_id_reference)
@@ -141,27 +136,21 @@ FloatAdditionNode::~FloatAdditionNode()
 
 std::vector<AbstractPlug*> FloatAdditionNode::GetPlugIns() const 
 {   
-    std::vector<AbstractPlug*> source_connections;
-    if(_in_0->GetSourcePlug())
-        source_connections.emplace_back(_in_0->GetSourcePlug());
-    if(_in_1->GetSourcePlug())
-        source_connections.emplace_back(_in_1->GetSourcePlug());
-    return source_connections;
+    std::vector<AbstractPlug*> connected_plugins = {};
+    if (GetPlugIn_0()->GetSourcePlug())
+        connected_plugins.emplace_back(GetPlugIn_0()->GetSourcePlug());
+    if (GetPlugIn_1()->GetSourcePlug())
+        connected_plugins.emplace_back(GetPlugIn_1()->GetSourcePlug());
+    return connected_plugins;
 }
 
 
 std::vector<AbstractPlug*> FloatAdditionNode::GetPlugOuts() const
 {    
-    return {_out_0.get()}; 
+    return {GetOutPlug()}; 
 }
 
  
-PlugOut<float>* FloatAdditionNode::GetOutPlug() const
-{
-    return _out_0.get();
-}
-
-
 bool FloatAdditionNode::Compute()
 {
     // look first if theres a input connection from it's PlugIns.
@@ -191,6 +180,18 @@ bool FloatAdditionNode::Compute()
 }
 
 
+int FloatAdditionNode::GetDefaultValue_0_Id() const
+{
+    return _default_attr_0->_id;
+}
+
+
+float FloatAdditionNode::GetDefaultValue_0() const
+{
+    return _default_attr_0->_value;
+}
+
+
 void FloatAdditionNode::SetDefaultValue_0(float value)
 {
     _default_attr_0->_value = value;
@@ -198,9 +199,16 @@ void FloatAdditionNode::SetDefaultValue_0(float value)
         SetDirty(true);
 }
 
-int FloatAdditionNode::GetDefaultValue_0_Id() const
+
+int FloatAdditionNode::GetDefaultValue_1_Id() const
 {
-    return _default_attr_0->_id;
+    return _default_attr_1->_id;
+}
+
+
+float FloatAdditionNode::GetDefaultValue_1() const
+{
+    return _default_attr_1->_value;
 }
 
 
@@ -221,6 +229,12 @@ PlugIn<float>* FloatAdditionNode::GetPlugIn_0() const
 PlugIn<float>* FloatAdditionNode::GetPlugIn_1()const
 {
     return _in_1.get();
+}
+
+
+PlugOut<float>* FloatAdditionNode::GetOutPlug() const
+{
+    return _out_0.get();
 }
 
 
@@ -258,8 +272,10 @@ bool EvaluationNode::IterateGraph(AbstractNode* node)
 {    
     for(auto x : node->GetPlugIns())
     {
+        std::cout << "plugIn id: " << x->GetId() <<std::endl;
         if(x->GetParent())
         {
+            std::cout <<"has parent id:" << x->GetParent()->GetId() << std::endl;
             if(IterateGraph(x->GetParent()))
                 node->SetDirty(true);
         }
@@ -268,7 +284,7 @@ bool EvaluationNode::IterateGraph(AbstractNode* node)
     if (node->Compute())
     {
         std::cout << "graph evaluated" << std::endl;
-        node->SetDirty(false);   
+        node->SetDirty(false);
         return true;
     }
     return false;
@@ -279,7 +295,12 @@ bool EvaluationNode::Compute()
 {
     if(_in_0->GetSourcePlug())
     {
-        IterateGraph(_in_0->GetSourcePlug()->GetParent());
+
+        if (_in_0->GetSourcePlug()->GetParent())
+        {
+            std::cout << "has parent id:" << _in_0->GetSourcePlug()->GetParent()->GetId() << std::endl;
+            IterateGraph(_in_0->GetSourcePlug()->GetParent());
+        }
     // just for debugging 
         GetPlugIn_0()->PrintValue();
         return true;

@@ -4,6 +4,7 @@
 #include "imnodes.h"
 #include "abstract_node_container.h"
 #include "float_node_container.h"
+#include "float_addition_node_container.h"
 
 
 /*
@@ -20,6 +21,7 @@ NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_st
     _global_id_count = 0;
     _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatNodeContainer(_global_id_count)));
     _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatNodeContainer(_global_id_count)));
+    _node_list.emplace_back(std::unique_ptr<AbstractNodeContainer>(new FloatAdditionNodeContainer(_global_id_count)));
 
     ImNodes::CreateContext();
 }

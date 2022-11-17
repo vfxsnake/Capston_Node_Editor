@@ -30,7 +30,8 @@ void FloatNodeContainer::DrawNode() const
     ImGui::PushItemWidth(120.0f);
     float dynamic_value = _logic->GetDefaultValue();
     ImGui::DragFloat("value",&dynamic_value, 0.01f);
-    _logic->SetDefaultValue(dynamic_value);
+    if (dynamic_value != _logic->GetDefaultValue())
+        _logic->SetDefaultValue(dynamic_value);
     ImGui::PopItemWidth();
     ImNodes::EndStaticAttribute();
 

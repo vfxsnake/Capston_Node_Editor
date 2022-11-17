@@ -121,6 +121,7 @@ int main()
     add3.GetPlugIn_1()->SetSourcePlug(add2.GetOutPlug());
     
     evaluate1.GetPlugIn_0()->SetSourcePlug(add3.GetOutPlug());
+    std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<< compute <<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
     evaluate1.Compute();
 
     std::cout << "no changes compute: ====================================" << std::endl;

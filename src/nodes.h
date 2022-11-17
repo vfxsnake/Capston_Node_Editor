@@ -58,15 +58,17 @@ public:
 
     // accessors to default values
     void SetDefaultValue_0(float value);
+    float GetDefaultValue_0() const;
     int GetDefaultValue_0_Id() const;
     
     void SetDefaultValue_1(float value);
+    float GetDefaultValue_1() const;
     int GetDefaultValue_1_Id() const;
 
    PlugOut<float>* GetOutPlug()const;
 
-    PlugIn<float>* GetPlugIn_0()const;
-    PlugIn<float>* GetPlugIn_1()const;
+    PlugIn<float>* GetPlugIn_0()const; 
+    PlugIn<float>* GetPlugIn_1()const; 
 
 private:
     // unique pointers to plugs.

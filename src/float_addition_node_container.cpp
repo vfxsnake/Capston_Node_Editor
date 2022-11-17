@@ -24,19 +24,50 @@ void FloatAdditionNodeContainer::DrawNode() const
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted("Float Addition Node");
     ImNodes::EndNodeTitleBar();
-    
-    // attribute definition.
-    ImNodes::BeginStaticAttribute(_logic->GetDefaultValueId());
-    ImGui::PushItemWidth(120.0f);
-    float dynamic_value = _logic->GetDefaultValue();
-    ImGui::DragFloat("value",&dynamic_value, 0.01f);
-    _logic->SetDefaultValue(dynamic_value);
-    ImGui::PopItemWidth();
-    ImNodes::EndStaticAttribute();
+
+    // input 0
+    ImNodes::BeginInputAttribute(_logic->GetPlugIn_0()->GetId());
+    float text_width = ImGui::CalcTextSize("in_0").x;
+    ImGui::Indent(120.f + ImGui::CalcTextSize("in_0").x - text_width);
+    ImGui::TextUnformatted("in_0");
+    ImNodes::EndInputAttribute();
+
+    // attribute 0 definition.
+    if(_logic->GetPlugIn_0()->GetSourcePlug() == nullptr)
+    {
+        ImNodes::BeginStaticAttribute(_logic->GetDefaultValue_0_Id());
+        ImGui::PushItemWidth(120.0f);
+        float dynamic_value_0 = _logic->GetDefaultValue_0();
+        ImGui::DragFloat("value_0",&dynamic_value_0, 0.01f);
+        if (dynamic_value_0 != _logic->GetDefaultValue_0())
+            _logic->SetDefaultValue_0(dynamic_value_0);
+        ImGui::PopItemWidth();
+        ImNodes::EndStaticAttribute();
+    }
+
+    // input 1
+    ImNodes::BeginInputAttribute(_logic->GetPlugIn_1()->GetId());
+    text_width = ImGui::CalcTextSize("in_1").x;
+    ImGui::Indent(120.f + ImGui::CalcTextSize("in_1").x - text_width);
+    ImGui::TextUnformatted("in_1");
+    ImNodes::EndInputAttribute();
+
+    // attribute 1 definition.
+    if(_logic->GetPlugIn_1()->GetSourcePlug() == nullptr)
+    {
+        ImNodes::BeginStaticAttribute(_logic->GetDefaultValue_1_Id());
+        ImGui::PushItemWidth(120.0f);
+        float dynamic_value_1 = _logic->GetDefaultValue_1();
+        ImGui::DragFloat("value_1",&dynamic_value_1, 0.01f);
+        if (dynamic_value_1 != _logic->GetDefaultValue_1())
+            _logic->SetDefaultValue_1(dynamic_value_1);
+        ImGui::PopItemWidth();
+        ImNodes::EndStaticAttribute();
+    }
 
     // Output attribute
     ImNodes::BeginOutputAttribute(_logic->GetOutPlug()->GetId());
-    const float text_width = ImGui::CalcTextSize("output").x;
+    text_width = ImGui::CalcTextSize("output").x;
     ImGui::Indent(120.f + ImGui::CalcTextSize("value").x - text_width);
     ImGui::TextUnformatted("output");
     ImNodes::EndOutputAttribute();
