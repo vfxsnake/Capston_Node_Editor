@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <map>
 #include <memory>
 #include "imgui.h"
 
@@ -33,25 +34,26 @@ public:
     // draws nodes, and links
     void Draw();
 
-    // getters
-    int GetNodeEditorId();
-    const char* GetName();
 
     // create node
-    void AddNode(const char* node_name);
+    template<typename T>
+    std::unique_ptr<T> AddNode(int &global_id);
+
 
 private:
 
     void DrawCanvas();
-    void DrawOutLiner();
     void DrawNodes();
     void DrawLinks();
+
+    void DeleteLinks(int number_of_links_selected);
+    void DeleteNodes(int number_of_nodes_selected);
 
     int _id; // window id for imgui
     const char* _name;
 
     int _out_liner_width = 150;
     int _global_id_count = 0;
-    std::vector<std::unique_ptr<AbstractNodeContainer>> _node_list;
-    std::vector<std::unique_ptr<Link>> _link_list;
+    std::map<int ,std::unique_ptr<AbstractNodeContainer>> _node_map;
+    std::map<int , std::unique_ptr<Link>> _link_map;
 };
