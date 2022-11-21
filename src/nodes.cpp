@@ -46,16 +46,13 @@ std::vector<AbstractPlug*> FloatNode::GetPlugIns() const
 std::vector<AbstractPlug*> FloatNode::GetPlugOuts() const
 {
     std::vector<AbstractPlug*> outputs;
-    return {_out_0.get()};
+    return {GetOutPlug()};
 }
 
-
-PlugOut<float>* FloatNode::GetOutPlug() const
+PlugOut<float>* FloatNode::GetOutPlug()const
 {
     return _out_0.get();
 }
-
-
 /*
     Compute returns true if the result value
     was updated, so it triggers the Dirty propagation
@@ -195,8 +192,7 @@ float FloatAdditionNode::GetDefaultValue_0() const
 void FloatAdditionNode::SetDefaultValue_0(float value)
 {
     _default_attr_0->_value = value;
-    if (!IsDirty())
-        SetDirty(true);
+    SetDirty(true);
 }
 
 
@@ -215,8 +211,7 @@ float FloatAdditionNode::GetDefaultValue_1() const
 void FloatAdditionNode::SetDefaultValue_1(float value)
 {
     _default_attr_1->_value = value;
-    if (!IsDirty())
-        SetDirty(true);
+    SetDirty(true);
 }
 
 

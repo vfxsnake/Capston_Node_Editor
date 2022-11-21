@@ -9,30 +9,26 @@
 #include "evaluate_node_container.h"
 #include "link.hpp"
 
+
 /*
     NodeEditor class manages the Node system
     creates nodes and register the nodes, plugs y links
     It contains a map structure so we can relate node plugs to node container plug.
 */
-NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start) : 
+NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start, int editor_width, int editor_height) : 
                                                                                 _id(canvas_id), // canvas window id to be recognized by imgui
                                                                                 _name(canvas_name), 
-                                                                                _global_id_count(node_ui_id_start) // offset when reloading an existing graph
+                                                                                _global_id_count(node_ui_id_start), // offset when reloading an existing graph
+                                                                                _editor_width(editor_height),
+                                                                                _editor_height(editor_height)
 {
     // Start the Graph node system provided by ImNodes.
-    _global_id_count = 0;
-    std::unique_ptr<AbstractNodeContainer> float_node_1 = std::make_unique<FloatNodeContainer>(_global_id_count);
-    _node_map.emplace(float_node_1->GetId(), std::move(float_node_1));
+    AppendNodeToNodeMap<FloatNodeContainer>(_global_id_count);
+    AppendNodeToNodeMap<FloatNodeContainer>(_global_id_count);
+    AppendNodeToNodeMap<FloatAdditionNodeContainer>(_global_id_count);
+
+    AppendNodeToNodeMap<EvaluateNodeContainer>(_global_id_count);
     
-    std::unique_ptr<AbstractNodeContainer> float_node_2 = std::make_unique<FloatNodeContainer>(_global_id_count); 
-    _node_map.emplace( float_node_2->GetId(), std::move(float_node_2));
-
-    std::unique_ptr<AbstractNodeContainer> float_addition = std::make_unique<FloatAdditionNodeContainer>(_global_id_count);
-    _node_map.emplace(float_addition->GetId(), std::move(float_addition));
-
-    std::unique_ptr<AbstractNodeContainer> evaluation_node = std::make_unique<EvaluateNodeContainer>(_global_id_count);
-    _node_map.emplace(evaluation_node->GetId(), std::move(evaluation_node));
-
     ImNodes::CreateContext();
 }
 
@@ -43,9 +39,10 @@ NodeEditor::~NodeEditor()
     ImNodes::DestroyContext();
 }
 
+
 /*
     Main draw function for the node editor.
-    Draws the Node out-liner creator, the Node canvas.
+    Draws the canvas, nodes and links.
 */
 void NodeEditor::Draw()
 {
@@ -60,6 +57,13 @@ void NodeEditor::Draw()
     ImGui::End();
 }
 
+
+template<typename T>
+void NodeEditor::AppendNodeToNodeMap(int &global_id)
+{
+    std::unique_ptr<T> new_node =  std::make_unique<T>(global_id);
+    _node_map.emplace(new_node->GetId(), move(new_node));
+}
 
 void NodeEditor::DrawCanvas()
 {
@@ -98,6 +102,7 @@ void NodeEditor::DrawCanvas()
 
 }
 
+
 void NodeEditor::DrawNodes()
 {
     for (std::pair<const int, std::unique_ptr<AbstractNodeContainer>>& node_pair : _node_map)
@@ -106,6 +111,7 @@ void NodeEditor::DrawNodes()
     }
 }
 
+
 void NodeEditor::DrawLinks()
 {
     for (std::pair<const int, std::unique_ptr<Link>>& link_pair : _link_map)
@@ -113,6 +119,7 @@ void NodeEditor::DrawLinks()
         link_pair.second->DrawLink();
     }
 }
+
 
 void NodeEditor::DeleteLinks(int number_of_links_selected)
 {
@@ -129,6 +136,7 @@ void NodeEditor::DeleteLinks(int number_of_links_selected)
         }
     }
 }
+
 
 void NodeEditor::DeleteNodes(int number_of_nodes_selected)
 {

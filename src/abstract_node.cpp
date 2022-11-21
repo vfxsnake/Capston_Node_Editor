@@ -26,8 +26,3 @@ int AbstractNode::GetId()
 {
     return _id;
 }
-
-AbstractNode* AbstractNode::GetPointer()
-{
-    // return shared_from_this();
-}

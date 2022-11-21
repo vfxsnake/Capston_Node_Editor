@@ -40,7 +40,10 @@ void FloatAdditionNodeContainer::DrawNode() const
         float dynamic_value_0 = _logic->GetDefaultValue_0();
         ImGui::DragFloat("value_0",&dynamic_value_0, 0.01f);
         if (dynamic_value_0 != _logic->GetDefaultValue_0())
+        {
+            std::cout << "dyn value 0 changed" << std::endl;
             _logic->SetDefaultValue_0(dynamic_value_0);
+        }
         ImGui::PopItemWidth();
         ImNodes::EndStaticAttribute();
     }
@@ -60,7 +63,10 @@ void FloatAdditionNodeContainer::DrawNode() const
         float dynamic_value_1 = _logic->GetDefaultValue_1();
         ImGui::DragFloat("value_1",&dynamic_value_1, 0.01f);
         if (dynamic_value_1 != _logic->GetDefaultValue_1())
+        {
+            std::cout << "add logic value 1 changed" << std::endl;
             _logic->SetDefaultValue_1(dynamic_value_1);
+        }
         ImGui::PopItemWidth();
         ImNodes::EndStaticAttribute();
     }
@@ -73,4 +79,16 @@ void FloatAdditionNodeContainer::DrawNode() const
     ImNodes::EndOutputAttribute();
 
     ImNodes::EndNode();
+}
+
+
+std::vector<PlugIn<float>*> FloatAdditionNodeContainer::GetPlugIns() const
+{
+    return {_logic->GetPlugIn_0(), _logic->GetPlugIn_1()};
+}
+
+
+std::vector<PlugOut<float>*> FloatAdditionNodeContainer::GetPlugOuts() const
+{
+    return {_logic->GetOutPlug()};
 }

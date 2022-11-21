@@ -13,7 +13,6 @@ public:
     const char* GetName();
     bool IsDirty() const;
     int GetId();
-    AbstractNode* GetPointer();
   
     // setters
     void SetName(const char* name);

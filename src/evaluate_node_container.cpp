@@ -21,6 +21,7 @@ void EvaluateNodeContainer::DrawNode() const
 {
     // node begin
     ImNodes::BeginNode(GetId());
+    
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted("Evaluate Node");
     ImNodes::EndNodeTitleBar();
@@ -41,4 +42,16 @@ void EvaluateNodeContainer::DrawNode() const
     ImNodes::EndInputAttribute();
 
     ImNodes::EndNode();
+}
+
+
+std::vector<PlugIn<float>*> EvaluateNodeContainer::GetPlugIns() const
+{
+    return {_logic->GetPlugIn_0()};
+}
+
+
+std::vector<PlugOut<float>*> EvaluateNodeContainer::GetPlugOuts() const
+{
+    return {};
 }

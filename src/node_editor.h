@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include "imgui.h"
+#include "plug.hpp"
 
 // #include "node_base.hpp"
 
@@ -20,13 +21,15 @@
 // forward declarations
 class NodeContainers;
 class AbstractNodeContainer;
+class AbstractPlug;
+
 struct Link;
 
 class NodeEditor
 {
 public:
     // this class must apply the rule of five as it will be a unique pointer in the app.
-    NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start=0);
+    NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start=0, int editor_width=700, int editor_height=600);
     
     // destructor
     ~NodeEditor();
@@ -37,7 +40,7 @@ public:
 
     // create node
     template<typename T>
-    std::unique_ptr<T> AddNode(int &global_id);
+    void AppendNodeToNodeMap(int &global_id);
 
 
 private:
@@ -51,9 +54,12 @@ private:
 
     int _id; // window id for imgui
     const char* _name;
+    int _editor_width;
+    int _editor_height;
 
-    int _out_liner_width = 150;
     int _global_id_count = 0;
     std::map<int ,std::unique_ptr<AbstractNodeContainer>> _node_map;
     std::map<int , std::unique_ptr<Link>> _link_map;
+    std::map<int, PlugIn<float>*> _plug_in_map;
+    std::map<int, PlugOut<float>*> _plug_out_map;
 };

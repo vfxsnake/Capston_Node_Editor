@@ -24,7 +24,6 @@ void FloatNodeContainer::DrawNode() const
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted("Float Node");
     ImNodes::EndNodeTitleBar();
-    
     // attribute definition.
     ImNodes::BeginStaticAttribute(_logic->GetDefaultValueId());
     ImGui::PushItemWidth(120.0f);
@@ -42,5 +41,17 @@ void FloatNodeContainer::DrawNode() const
     ImGui::TextUnformatted("output");
     ImNodes::EndOutputAttribute();
 
-    ImNodes::EndNode();
+    ImNodes::EndNode();  
+}
+
+
+std::vector<PlugIn<float>*> FloatNodeContainer::GetPlugIns() const
+{
+    return {};
+}
+
+
+std::vector<PlugOut<float>*> FloatNodeContainer::GetPlugOuts() const
+{
+    return {_logic->GetOutPlug()};
 }
