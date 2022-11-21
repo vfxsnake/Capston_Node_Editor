@@ -1,4 +1,5 @@
 #include <memory>
+#include <vector>
 #include "abstract_node_container.h"
 
 // forward declaration
