@@ -48,6 +48,7 @@ void NodeEditor::Draw()
     ImGui::SameLine();
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     ImGuiIO& io = ImGui::GetIO();
+    ImGui::Text("\t\t\t\t\tNavigate by clicking and sustain the Middle mouse button. move nodes by click dragging the Nodes.");
 
     // Draw creator
     DrawCreator();
@@ -55,6 +56,7 @@ void NodeEditor::Draw()
     // canvas
     DrawCanvas();
 
+    
     ImGui::End();
 }
 
@@ -92,11 +94,15 @@ void NodeEditor::DrawCreator()
     }
     
     ImGui::Separator();
-    ImGui::Text("connect the nodes by \nleft click and drag from \na out plug to an in plug.");
-    ImGui::Text("Links can only be created \nin not connected plugs, \nif a plug exists select \nand press delete.");
+    ImGui::Text("connect the nodes by \n left click and drag from \n an out plug to an in plug.");
+    ImGui::Separator();
+    ImGui::Text("Links can only be created \n at not connected plugs, \n if a plug exists select \nand press delete.");
+     ImGui::Separator();
     ImGui::Text("for deleting nodes select \nand press delete.");
-    ImGui::Text("for editing the nodes values \nleft click and drag left \nor right to slide the value.");
-    ImGui::Text("For evaluate the node graph \nconnect the out plug of the \nnetwork to the evaluate node.");
+     ImGui::Separator();
+    ImGui::Text("for editing the nodes values \nleft click and drag left \n or right to slide the value.");
+     ImGui::Separator();
+    ImGui::Text("For evaluate the node graph \nconnect the out plug of the \n network to the evaluate node.");
     
 
     ImGui::EndChild();
