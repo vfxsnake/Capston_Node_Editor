@@ -29,7 +29,7 @@ class NodeEditor
 {
 public:
     // this class must apply the rule of five as it will be a unique pointer in the app.
-    NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start=0, int editor_width=700, int editor_height=600);
+    NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start=100, int editor_width=700, int editor_height=600, int creator_width=250);
     
     // destructor
     ~NodeEditor();
@@ -37,14 +37,13 @@ public:
     // draws nodes, and links
     void Draw();
 
-
     // create node
     template<typename T>
     void AppendNodeToNodeMap(int &global_id);
 
 
 private:
-
+    void DrawCreator();
     void DrawCanvas();
     void DrawNodes();
     void DrawLinks();
@@ -56,6 +55,8 @@ private:
     const char* _name;
     int _editor_width;
     int _editor_height;
+
+    int _creator_width;
 
     int _global_id_count = 0;
     std::map<int ,std::unique_ptr<AbstractNodeContainer>> _node_map;

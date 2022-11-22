@@ -15,18 +15,15 @@
     creates nodes and register the nodes, plugs y links
     It contains a map structure so we can relate node plugs to node container plug.
 */
-NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start, int editor_width, int editor_height) : 
+NodeEditor::NodeEditor(int canvas_id, const char* canvas_name, int node_ui_id_start, int editor_width, int editor_height, int creator_width) : 
                                                                                 _id(canvas_id), // canvas window id to be recognized by imgui
                                                                                 _name(canvas_name), 
                                                                                 _global_id_count(node_ui_id_start), // offset when reloading an existing graph
                                                                                 _editor_width(editor_height),
-                                                                                _editor_height(editor_height)
+                                                                                _editor_height(editor_height),
+                                                                                _creator_width(creator_width)
 {
     // Start the Graph node system provided by ImNodes.
-    AppendNodeToNodeMap<FloatNodeContainer>(_global_id_count);
-    AppendNodeToNodeMap<FloatNodeContainer>(_global_id_count);
-    AppendNodeToNodeMap<FloatAdditionNodeContainer>(_global_id_count);
-
     AppendNodeToNodeMap<EvaluateNodeContainer>(_global_id_count);
     
     ImNodes::CreateContext();
@@ -51,7 +48,11 @@ void NodeEditor::Draw()
     ImGui::SameLine();
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     ImGuiIO& io = ImGui::GetIO();
-    // ImGui::SameLine();
+
+    // Draw creator
+    DrawCreator();
+    ImGui::SameLine();
+    // canvas
     DrawCanvas();
 
     ImGui::End();
@@ -70,6 +71,37 @@ void NodeEditor::AppendNodeToNodeMap(int &global_id)
 
     _node_map.emplace(new_node->GetId(), move(new_node));
 }
+
+
+void NodeEditor::DrawCreator()
+{
+    ImGui::BeginChild("node_list", ImVec2(_creator_width, 0));
+    ImGui::Text("Create Nodes.");
+    
+    ImGui::Separator();
+    ImGui::Text("Create nodes by clicking in \nthe create buttons to add \nfloat values nodes or \naddition nodes.");
+    
+    if(ImGui::Button("Create float Node",ImVec2(250, 20)))
+    {
+        AppendNodeToNodeMap<FloatNodeContainer>(_global_id_count);
+    }
+    
+    if(ImGui::Button("Create Addition Node",ImVec2(250, 20)))
+    {
+        AppendNodeToNodeMap<FloatAdditionNodeContainer>(_global_id_count);
+    }
+    
+    ImGui::Separator();
+    ImGui::Text("connect the nodes by \nleft click and drag from \na out plug to an in plug.");
+    ImGui::Text("Links can only be created \nin not connected plugs, \nif a plug exists select \nand press delete.");
+    ImGui::Text("for deleting nodes select \nand press delete.");
+    ImGui::Text("for editing the nodes values \nleft click and drag left \nor right to slide the value.");
+    ImGui::Text("For evaluate the node graph \nconnect the out plug of the \nnetwork to the evaluate node.");
+    
+
+    ImGui::EndChild();
+}
+
 
 void NodeEditor::DrawCanvas()
 {
@@ -157,6 +189,8 @@ void NodeEditor::DeleteNodes(int number_of_nodes_selected)
         for(int id : nodes_id_vector)
         {
             // look for connections ins and out connections to delete links before deleting
+            if (_node_map.at(id)->IsPersistent())
+                continue;
             _node_map.erase(id);
             std::cout << "node id: " << id << " deleted." << std::endl;
         }

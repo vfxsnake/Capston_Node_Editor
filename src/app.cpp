@@ -7,15 +7,14 @@
 App::App()
 {
     std::cout << "app constructor"<< std::endl;
-    _node_editor = new NodeEditor(0, "Node Editor");
+    _node_editor = std::make_unique<NodeEditor>(0, "Node Editor");
 }
 
 App::~App()
 {
     std::cout << "app destructor."<< std::endl;
-    delete _node_editor;
-    
 }
+ 
 
 void App::Update()
 {

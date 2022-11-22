@@ -9,6 +9,7 @@ EvaluateNodeContainer::EvaluateNodeContainer(int &global_id)
 {
     _logic = std::unique_ptr<EvaluationNode>(new EvaluationNode(global_id));
     SetId(_logic->GetId()); 
+    SetPersistent(true);
     std::cout << "constructor EvaluationNodeContainer id: " << std::endl;
 }
 

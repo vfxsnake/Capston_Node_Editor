@@ -22,3 +22,13 @@ ImVec2 AbstractNodeContainer::GetPosition() const
 {
     return _position;
 }
+
+void AbstractNodeContainer::SetPersistent(bool value)
+{
+    _persistent = value;
+}
+
+bool AbstractNodeContainer::IsPersistent() const
+{
+    return _persistent;
+}

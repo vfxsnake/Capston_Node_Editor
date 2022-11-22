@@ -14,8 +14,12 @@ public:
 
     // should be implemented in any future subclass.
     virtual void DrawNode() const = 0;
+    
+    void SetPersistent(bool value);
+    bool IsPersistent() const;
 
 private:
     float _id;
     ImVec2 _position;
+    bool _persistent = false;
 };

@@ -14,8 +14,5 @@ public:
 
 private:
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    bool show_demo_window = true;
-    bool show_node_demo = true;
-    bool show_another_window = false;
-    NodeEditor* _node_editor = nullptr;
+    std::unique_ptr<NodeEditor> _node_editor;
 };
