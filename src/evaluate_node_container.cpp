@@ -20,6 +20,7 @@ EvaluateNodeContainer::~EvaluateNodeContainer()
 void EvaluateNodeContainer::DrawNode() const
 {
     // node begin
+    _logic->Compute();
     ImNodes::BeginNode(GetId());
     
     ImNodes::BeginNodeTitleBar();

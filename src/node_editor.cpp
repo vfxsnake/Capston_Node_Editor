@@ -62,6 +62,12 @@ template<typename T>
 void NodeEditor::AppendNodeToNodeMap(int &global_id)
 {
     std::unique_ptr<T> new_node =  std::make_unique<T>(global_id);
+    for (auto plug_in : new_node->GetPlugIns())
+        _plug_in_map.emplace(plug_in->GetId(), plug_in);
+    
+    for (auto plug_out : new_node->GetPlugOuts())
+        _plug_out_map.emplace(plug_out->GetId(), plug_out);
+
     _node_map.emplace(new_node->GetId(), move(new_node));
 }
 
@@ -80,15 +86,17 @@ void NodeEditor::DrawCanvas()
     int start_attr, end_attr;
     if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
     {
-        std::cout << "link created from : " << start_attr << " " << end_attr << std::endl;
         // call node editors create link and add it to the link list
         std::unique_ptr<Link> current_link = std::make_unique<Link>(++_global_id_count, start_attr, end_attr);
-        _link_map.emplace(current_link->id, std::move(current_link));
+        if(_plug_in_map.at(end_attr)->GetSourcePlug() == nullptr)
+        {
+            _plug_in_map.at(end_attr)->SetSourcePlug(_plug_out_map.at(start_attr));
+            _link_map.emplace(current_link->id, std::move(current_link));
+        }
     }
 
     if(ImGui::IsKeyReleased(ImGui::GetKeyIndex(ImGuiKey_Delete)))
     {
-        std::cout << "delete key released" <<std::endl;
         int links_selected = ImNodes::NumSelectedLinks();
         DeleteLinks(links_selected);
 
@@ -130,6 +138,7 @@ void NodeEditor::DeleteLinks(int number_of_links_selected)
         ImNodes::GetSelectedLinks(links_id_vector.data()); 
         for(int id : links_id_vector)
         {
+            _plug_in_map.at(_link_map.at(id)->target_plug_id)->SetSourcePlug(nullptr);
             _link_map.erase(id);
             std::cout << "link id: " << id << " deleted." << std::endl;
         

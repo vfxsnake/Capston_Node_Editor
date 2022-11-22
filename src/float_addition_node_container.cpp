@@ -41,7 +41,6 @@ void FloatAdditionNodeContainer::DrawNode() const
         ImGui::DragFloat("value_0",&dynamic_value_0, 0.01f);
         if (dynamic_value_0 != _logic->GetDefaultValue_0())
         {
-            std::cout << "dyn value 0 changed" << std::endl;
             _logic->SetDefaultValue_0(dynamic_value_0);
         }
         ImGui::PopItemWidth();
@@ -64,7 +63,6 @@ void FloatAdditionNodeContainer::DrawNode() const
         ImGui::DragFloat("value_1",&dynamic_value_1, 0.01f);
         if (dynamic_value_1 != _logic->GetDefaultValue_1())
         {
-            std::cout << "add logic value 1 changed" << std::endl;
             _logic->SetDefaultValue_1(dynamic_value_1);
         }
         ImGui::PopItemWidth();

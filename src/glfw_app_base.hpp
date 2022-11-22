@@ -117,7 +117,6 @@ public:
 
     void Update()
     {
-        // std::cout << "std_app_base Update"<< std::endl;
         static_cast<Derived*>(this)->Update();
         
     }
@@ -125,8 +124,6 @@ public:
 
     void Render()
     {
-        // std::cout << "std_app_base Render"<< std::endl;
-        
         // Rendering
         ImGui::Render();
         int display_w, display_h;

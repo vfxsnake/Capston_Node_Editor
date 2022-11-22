@@ -168,7 +168,6 @@ bool FloatAdditionNode::Compute()
             value_1 = _in_1->GetSourcePlug()->DeReferenceValue();
 
         //  perform addition
-        std::cout << " val 0: " << value_0 << " val 1: " << value_1 << std::endl;
         *_result = value_0 + value_1;
         return true;
     }
@@ -269,10 +268,8 @@ bool EvaluationNode::IterateGraph(AbstractNode* node)
 {    
     for(auto x : node->GetPlugIns())
     {
-        std::cout << "plugIn id: " << x->GetId() <<std::endl;
         if(x->GetParent())
         {
-            std::cout <<"has parent id:" << x->GetParent()->GetId() << std::endl;
             if(IterateGraph(x->GetParent()))
                 node->SetDirty(true);
         }
@@ -280,7 +277,6 @@ bool EvaluationNode::IterateGraph(AbstractNode* node)
 
     if (node->Compute())
     {
-        std::cout << "graph evaluated" << std::endl;
         node->SetDirty(false);
         return true;
     }
@@ -295,7 +291,6 @@ bool EvaluationNode::Compute()
 
         if (_in_0->GetSourcePlug()->GetParent())
         {
-            std::cout << "has parent id:" << _in_0->GetSourcePlug()->GetParent()->GetId() << std::endl;
             IterateGraph(_in_0->GetSourcePlug()->GetParent());
         }
     // just for debugging 
