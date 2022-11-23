@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <imgui.h>
 
 class AbstractNodeContainer
@@ -14,9 +15,12 @@ public:
 
     // should be implemented in any future subclass.
     virtual void DrawNode() const = 0;
+    virtual std::vector<int> GetInputsId() const =0;
+    virtual std::vector<int> GetOutputsId() const =0;
     
     void SetPersistent(bool value);
     bool IsPersistent() const;
+
 
 private:
     float _id;

@@ -16,7 +16,7 @@ struct Link
         ImNodes::Link(id, source_plug_id, target_plug_id);
     }
 
-    float id;
+    int id;
 
     int source_plug_id;
     int target_plug_id;

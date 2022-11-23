@@ -41,7 +41,6 @@ public:
     template<typename T>
     void AppendNodeToNodeMap(int &global_id);
 
-
 private:
     void DrawCreator();
     void DrawCanvas();
@@ -49,7 +48,10 @@ private:
     void DrawLinks();
 
     void DeleteLinks(int number_of_links_selected);
+    void DeleteLink(int link_id);
     void DeleteNodes(int number_of_nodes_selected);
+
+    std::vector<int> FindLinksConnectedToNode(int node_id)const;
 
     int _id; // window id for imgui
     const char* _name;

@@ -57,3 +57,16 @@ std::vector<PlugOut<float>*> EvaluateNodeContainer::GetPlugOuts() const
 {
     return {};
 }
+
+std::vector<int> EvaluateNodeContainer::GetInputsId() const
+{
+    std::vector<int> plug_ins = {};
+    for(PlugIn<float>* plug : GetPlugIns())
+        plug_ins.emplace_back(plug->GetId());
+    return plug_ins;
+}
+
+std::vector<int> EvaluateNodeContainer::GetOutputsId() const
+{
+    return {};
+}

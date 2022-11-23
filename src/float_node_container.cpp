@@ -55,3 +55,18 @@ std::vector<PlugOut<float>*> FloatNodeContainer::GetPlugOuts() const
 {
     return {_logic->GetOutPlug()};
 }
+
+
+std::vector<int> FloatNodeContainer::GetInputsId() const
+{
+    return {};
+}   
+
+
+std::vector<int> FloatNodeContainer::GetOutputsId() const
+{
+    std::vector<int> plug_outs = {};
+    for(PlugOut<float>* plug : GetPlugOuts())
+        plug_outs.emplace_back(plug->GetId());
+    return plug_outs;
+}

@@ -16,7 +16,11 @@ class FloatNodeContainer : public AbstractNodeContainer
 public:
     FloatNodeContainer(int &global_id);
     ~FloatNodeContainer();
+    
     virtual void DrawNode() const override;
+    virtual std::vector<int> GetInputsId() const override;
+    virtual std::vector<int> GetOutputsId() const override;
+
     virtual std::vector<PlugIn<float>*> GetPlugIns() const;
     virtual std::vector<PlugOut<float>*> GetPlugOuts() const;
 

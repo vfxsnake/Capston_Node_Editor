@@ -90,3 +90,19 @@ std::vector<PlugOut<float>*> FloatAdditionNodeContainer::GetPlugOuts() const
 {
     return {_logic->GetOutPlug()};
 }
+
+std::vector<int> FloatAdditionNodeContainer::GetInputsId() const
+{
+    std::vector<int> plug_ins = {};
+    for(PlugIn<float>* plug : GetPlugIns())
+        plug_ins.emplace_back(plug->GetId());
+    return plug_ins;
+}
+
+std::vector<int> FloatAdditionNodeContainer::GetOutputsId() const
+{
+    std::vector<int> plug_outs = {};
+    for(PlugOut<float>* plug : GetPlugOuts())
+        plug_outs.emplace_back(plug->GetId());
+    return plug_outs;
+}

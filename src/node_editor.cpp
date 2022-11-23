@@ -82,6 +82,8 @@ void NodeEditor::DrawCreator()
     
     ImGui::Separator();
     ImGui::Text("Create nodes by clicking in \nthe create buttons to add \nfloat values nodes or \naddition nodes.");
+    ImGui::Text("Attributes can be updated by \n");
+    ImGui::Text("left click and drag from \n left to right. \n");
     
     if(ImGui::Button("Create float Node",ImVec2(250, 20)))
     {
@@ -176,12 +178,18 @@ void NodeEditor::DeleteLinks(int number_of_links_selected)
         ImNodes::GetSelectedLinks(links_id_vector.data()); 
         for(int id : links_id_vector)
         {
-            _plug_in_map.at(_link_map.at(id)->target_plug_id)->SetSourcePlug(nullptr);
-            _link_map.erase(id);
-            std::cout << "link id: " << id << " deleted." << std::endl;
-        
+            DeleteLink(id);
         }
+        ImNodes::ClearLinkSelection();
     }
+}
+
+
+void NodeEditor::DeleteLink(int link_id)
+{
+    _plug_in_map.at(_link_map.at(link_id)->target_plug_id)->SetSourcePlug(nullptr);
+    _link_map.erase(link_id);
+    std::cout << "link id: " << link_id << " deleted." << std::endl;
 }
 
 
@@ -194,12 +202,48 @@ void NodeEditor::DeleteNodes(int number_of_nodes_selected)
         ImNodes::GetSelectedNodes(nodes_id_vector.data()); 
         for(int id : nodes_id_vector)
         {
+            
             // look for connections ins and out connections to delete links before deleting
             if (_node_map.at(id)->IsPersistent())
                 continue;
+            std::vector<int> links_connected = FindLinksConnectedToNode(id);
+            for (int link_id : links_connected)
+            {
+                std::cout << "link connected : " << link_id << std::endl;
+                DeleteLink(link_id);
+            }
+
             _node_map.erase(id);
             std::cout << "node id: " << id << " deleted." << std::endl;
         }
+        ImNodes::ClearNodeSelection();
     }
 
 }
+
+ std::vector<int> NodeEditor::FindLinksConnectedToNode(int node_id)const
+ {
+    std::vector<int> connected_links_ids = {};
+    std::vector<int> inputs =  _node_map.at(node_id)->GetInputsId();
+    
+    for(auto& x : _link_map)
+    {   
+        for(auto y : inputs)
+        {
+            if(x.second->target_plug_id == y)
+                connected_links_ids.emplace_back(x.first);
+        }
+    }
+    
+    std::vector<int> outputs = _node_map.at(node_id)->GetOutputsId();
+    for(auto& x : _link_map)
+    {   
+        for(auto y : outputs)
+        {
+            if(x.second->source_plug_id == y)
+                connected_links_ids.emplace_back(x.first);
+        }
+    }
+
+    return connected_links_ids;
+ }

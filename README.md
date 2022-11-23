@@ -9,6 +9,9 @@ In this project, you can build your own C++ application starting with this repo,
 * Create a prototype of a node base application.
 * Resolve the logic associated of traversing the node graph and computing the result.
 * Resolve the Propagation of changes (dirty propagation) in the node graph.
+* Managing nodes creation, deletion and edition.
+* Managing link creation and deletion.
+
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
