@@ -65,7 +65,7 @@ For now is only supporting addition and subtraction for float values, but it can
 
 The evaluation process is done by the EvaluateNode, it uses a recursive function to traverse from connection to connection. until there's no
 other node to iterate, then it looks for changes in the nodes (dirty propagation) to see if it needs to recompute the graph.
-[Iterate Graph] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/nodes.cpp#:~:text=bool%20EvaluationNode%3A%3AIterateGraph(AbstractNode*%20node)
+[Iterate Graph] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/nodes.cpp#L287)
 
 ## plugs.hpp
 
