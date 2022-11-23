@@ -95,15 +95,24 @@ UI and the logcig of the nodes.
 
 
 ## Rubric Addressing:
-* [Loops, Functions, I/O]
+* [ Loops, Functions, I/O ]
   [main App loop:] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/glfw_app_base.hpp#L118)
     The update function is the function tha ImGui provides for creating the app loop. it draws the objects in screen.
-  [Passing reference values:] 
+  [ Passing reference values: ] 
     Use of references to unique pointers to iterate in the maps. (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/node_editor.cpp#L156)
-  [Use input:]
+  [ Use input: ]
     Creation of the nodes is handel in the interface. (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/node_editor.cpp#L88)
     float and float addition nodes receive user input (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/float_addition_node_container.cpp#L41)
 
-* [Object Oriented Programming]
-  [Derived class functions override virtual base class] All abstract classes uses the virtual and override keywords (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/abstract_node.h#L25)
+* [ Object Oriented Programming ]
+  [ Derived class functions override virtual base class ] All abstract classes uses the virtual and override keywords (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/abstract_node.h#L25)
+  [ Templates generalize functions in the project ] use of template classes. (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/plug.hpp#L55)
    
+* [ Memory Management]
+  The project uses smart pointers instead of raw pointers. (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/float_addition_node_container.cpp#L10)
+
+  ## Further development. 
+  This project is meant to be extended.
+  * make node evaluation multi-threading
+  * extend nodes to ints, and arrays values.
+  * ultimately must handle any type of data for examples Geometry meshes, Point clouds etc.. and apply any type of transformation (scale, rotate, move)  
