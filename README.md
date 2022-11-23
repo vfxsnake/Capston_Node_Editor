@@ -50,7 +50,24 @@ the "src" folder contains all the work done during the development.
 ## App class.
 the basic functionality for creating the app window is inside the App class witch inherits from GLFWAppBase, this class
 contains the basic call for the ImGui to call the back end of GLFW. 
-[GLFWappBase] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/glfw_app_base.hpp)
+| [GLFWappBase] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/glfw_app_base.hpp)
+
+## nodes.h and nodes.cpp
+Hire is defined all the logic for the nodes. the Nodes are inherited from the Class AbstractNode that has the basic functionality.
+That will help later on in traversing the node graph so it can be computed.
+The nodes are made of the composition of Plugs (plugs_ins and Plugs_outs).
+* Each node must deal with the allocation of resources. As each node is unique, unique pointers so no data will be copied out of the node
+* the mechanism of communication is through reference.
+* Each Node has a compute method that executes the logic.
+| [Nodes] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/node_editor.h)
+
+For now is only supporting addition and subtraction for float values, but it can be extended to any type of value.
+
+The evaluation process is done by the EvaluateNode, it uses a recursive function to traverse from connection to connection. until there's no
+other node to iterate, then it looks for changes in the nodes (dirty propagation) to see if it needs to recompute the graph.
+[Iterate Graph] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/nodes.cpp#:~:text=%7D-,bool%20EvaluationNode%3A%3AIterateGraph(AbstractNode*%20node),%7D,-bool%20EvaluationNode%3A%3ACompute)
+
+## plugs.hpp
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
