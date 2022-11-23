@@ -13,7 +13,7 @@ In this project, you can build your own C++ application starting with this repo,
 * Managing nodes creation, deletion and edition.
 * Managing link creation and deletion.
 
-## Capston Node Editor:
+## Capstone Node Editor:
 
 The Node editor is using ImGui along with ImNodes for displaying the nodes in the viewport.
 the main interface is divided in two parts:
@@ -23,7 +23,7 @@ the main interface is divided in two parts:
       this node acts like a variable it holds the value of a float and can be modified by dragging the mouse over (left click).
     * Created Addition Node. this button creates an instance of FloatAdditionNode that has the ability of adding the input connections.
       but it can be used alone, it contains 2 float values that can be dragged. if a connection is made the default values will be hidden
-      so it is clear that is only computing the input connectios.
+      so it is clear that is only computing the input connections.
 
 
 * the Canvas viewport.
@@ -32,8 +32,25 @@ performs the evaluation of the graph connected to it. for now it can only be one
 
 ![Node Editor](./images/Capston_Node_editor.png)
 
-#Project structure:
+## Project structure:
+The project is contained in the src folder.
+* Capston_Node_Editor->
+  * cmake
+  * images
+  * src
+    * external
+    * test   
 
+the external libraries are stored under the "external" folder (ImGui, ImNodes).
+no editions has been done to this libraries.
+
+Some Basic test Functions are inside the "test" folder, this functions were used during development to test the logic in the nodes.
+the "src" folder contains all the work done during the development.
+
+## App class.
+the basic functionality for creating the app window is inside the App class witch inherits from GLFWAppBase, this class
+contains the basic call for the ImGui to call the back end of GLFW. 
+[GLFWappBase] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/glfw_app_base.hpp)
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
