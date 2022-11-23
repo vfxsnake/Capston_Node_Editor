@@ -5,12 +5,34 @@ This is the repo for the my Capstone project in the [Udacity C++ Nanodegree Prog
 The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
 
 In this project, you can build your own C++ application starting with this repo, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
+
 # Goal
 * Create a prototype of a node base application.
 * Resolve the logic associated of traversing the node graph and computing the result.
 * Resolve the Propagation of changes (dirty propagation) in the node graph.
 * Managing nodes creation, deletion and edition.
 * Managing link creation and deletion.
+
+## Capston Node Editor:
+
+The Node editor is using ImGui along with ImNodes for displaying the nodes in the viewport.
+the main interface is divided in two parts:
+# the creator panel (also the instructions for use.)
+  * this interface has to buttons:
+    * Create float Node. this button creates an instance of a FloatNodeContainer.
+      this node acts like a variable it holds the value of a float and can be modified by dragging the mouse over (left click).
+    * Created Addition Node. this button creates an instance of FloatAdditionNode that has the ability of adding the input connections.
+      but it can be used alone, it contains 2 float values that can be dragged. if a connection is made the default values will be hidden
+      so it is clear that is only computing the input connectios.
+
+
+* the Canvas viewport.
+This canvas can be navigated using the middle mouse button, It has by default an instance of EvaluationNodeContainer, this evaluation node
+performs the evaluation of the graph connected to it. for now it can only be one Evaluation node.
+
+![Node Editor](./images/Capston_Node_editor.png)
+
+#Project structure:
 
 
 ## Dependencies for Running Locally
