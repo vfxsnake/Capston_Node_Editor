@@ -111,7 +111,7 @@ UI and the logcig of the nodes.
 * [ Memory Management]
   The project uses smart pointers instead of raw pointers. (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/float_addition_node_container.cpp#L10)
 
-  ## Further development. 
+## Further development. 
   This project is meant to be extended.
   * make node evaluation multi-threading
   * extend nodes to ints, and arrays values.
