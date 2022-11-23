@@ -67,8 +67,10 @@ The evaluation process is done by the EvaluateNode, it uses a recursive function
 other node to iterate, then it looks for changes in the nodes (dirty propagation) to see if it needs to recompute the graph.
 [Iterate Graph] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/nodes.cpp#L287)
 
-## plugs.hpp
-
+## Node Editor
+The node editor is the core of the application, inside of the node editor is the main app loop.
+the node editor manage the creation and deletion of the nodes and links. uses a variety of maps to handle the communication between the
+UI and the logcig of the nodes.
 ## Dependencies for Running Locally
 * cmake >= 3.7
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
@@ -90,3 +92,18 @@ other node to iterate, then it looks for changes in the nodes (dirty propagation
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./capstone_node_editor`.
+
+
+## Rubric Addressing:
+* [Loops, Functions, I/O]
+  [main App loop:] (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/glfw_app_base.hpp#L118)
+    The update function is the function tha ImGui provides for creating the app loop. it draws the objects in screen.
+  [Passing reference values:] 
+    Use of references to unique pointers to iterate in the maps. (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/node_editor.cpp#L156)
+  [Use input:]
+    Creation of the nodes is handel in the interface. (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/node_editor.cpp#L88)
+    float and float addition nodes receive user input (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/float_addition_node_container.cpp#L41)
+
+* [Object Oriented Programming]
+  [Derived class functions override virtual base class] All abstract classes uses the virtual and override keywords (https://github.com/vfxsnake/Capston_Node_Editor/blob/main/src/abstract_node.h#L25)
+   
